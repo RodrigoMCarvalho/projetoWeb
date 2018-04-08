@@ -46,6 +46,8 @@ public class Cliente extends GenericDomain{
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
 	}
+
+	
 	
 	
 }
