@@ -9,20 +9,25 @@
 	<title>Estados</title>
 </h:head>
 <body>
-<p:growl id="growl" sticky="true" /> 
+	<p:growl id="growl" sticky="true" />
 	<h:form>
-	  
+
 		<p:panel header="Estados - Listagem">
 			<p:dataTable emptyMessage="Nnenhum registro encontrado."
-				paginator="true">
+				paginator="true"
+				value="#{estadoBean.listEstados}" var="cursorEstado" >
 
 				<f:facet name="header">
-					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();" />
+					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
+						actionListener="#{estadoBean.novo()}"
+						update=":formEstado:panelEstado" />
+		<!-- chama o método 'novo' para inicializar a variável estado e update para apagar os dados da caixa de texto -->
 				</f:facet>
-
-				<p:column headerText="Nome">
+				<p:column headerText="Nome" sortBy="#{cursorEstado.nome}" filterBy="#{cursorEstado.nome}" filterMatchMode="contains">
+					<h:outputText value="#{cursorEstado.nome}"/>
 				</p:column>
 				<p:column headerText="Sigla">
+					<h:outputText value="#{cursorEstado.sigla}"/>
 				</p:column>
 				<p:column headerText="Opções">
 				</p:column>
@@ -35,15 +40,17 @@
 	<p:dialog header="Estados - Cadastro" widgetVar="dialogo"
 		draggable="false" resizable="false" modal="true">
 		<h:form id="formEstado">
-			<h:panelGrid columns="2">
+			<h:panelGrid columns="2" id="panelEstado">
 				<p:outputLabel value="Nome: " />
-				<p:inputText size="30" maxlength="50" />
+				<p:inputText size="30" maxlength="50"
+					value="#{estadoBean.estado.nome}" />
 				<p:outputLabel value="Sigla: " />
-				<p:inputText size="10" maxlength="2" />
+				<p:inputText size="10" maxlength="2"
+					value="#{estadoBean.estado.sigla}" />
 			</h:panelGrid>
-			<h:panelGrid columns="2" >
-				<p:commandButton value="Salvar" actionListener="#{estadoBean.salvar()}" 
-					update=":growl"/>
+			<h:panelGrid columns="2">
+				<p:commandButton value="Salvar"
+					actionListener="#{estadoBean.salvar()}" update=":growl :formEstado:panelEstado" />
 				<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" />
 			</h:panelGrid>
 		</h:form>

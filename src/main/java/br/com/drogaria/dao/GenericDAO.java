@@ -107,4 +107,23 @@ public class GenericDAO<Entidade> {
 		}
 	}
 	
+	//método que pode salvar ou editar, caso seja passado um identificador já existente
+	public void merge(Entidade entidade) {
+		Session sessao = HibernateUtil.getSessionFactory().openSession();
+		Transaction transacao = null;
+		
+		try {
+			transacao = sessao.beginTransaction();
+			sessao.merge(entidade);
+			transacao.commit();
+		} catch (RuntimeException erro) {
+			if (transacao != null) {
+				transacao.rollback();
+			}
+			throw erro;
+		} finally {
+			sessao.close();
+		}
+	}
+	
 }

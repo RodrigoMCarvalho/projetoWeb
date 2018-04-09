@@ -15,4 +15,13 @@ public class FabricanteDAOTest {
 		FabricanteDAO dao = new FabricanteDAO();
 		dao.salvar(f1);
 	}
+	
+	@Test
+	public void merge() {
+		Fabricante f1 = new Fabricante();
+		f1.setDescricao("Neo Química");
+		
+		FabricanteDAO dao = new FabricanteDAO();
+		dao.merge(f1);
+	}
 }
