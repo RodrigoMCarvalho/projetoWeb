@@ -12,19 +12,28 @@
 	<h:form>
 		<p:panel header="Clientes - Listagem">
 			<p:dataTable emptyMessage="Nnenhum registro encontrado."
-				paginator="true">
+				paginator="true"
+				value="#{clienteBean.listClientes}" var="cursorCliente">
 
 				<f:facet name="header">
 					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();" />
 				</f:facet>
-
+ 
 				<p:column headerText="Nome">
+					<h:outputText value="#{cursorCliente.pessoa.nome}" />
 				</p:column>
 				<p:column headerText="Data de Cadastro">
+					<h:outputText value="#{cursorCliente.dataCadastro}" />
 				</p:column>
 				<p:column headerText="Liberado">
-				</p:column>
+					<h:outputText value="#{cursorCliente.liberado}" />
+				</p:column> 
 				<p:column headerText="Opções">
+					<p:commandButton icon="ui-icon-trash" >
+						<p:confirm header="Confirmação" message="Deseja excluir o estado?"
+							icon="ui-icon-alert" />
+						<f:attribute name="estadoSelecionado" value="#{cursorEstado}"/>
+					</p:commandButton>
 				</p:column>
 
 			</p:dataTable>
