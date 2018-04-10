@@ -38,6 +38,12 @@
 							icon="ui-icon-alert" />
 						<f:attribute name="estadoSelecionado" value="#{cursorEstado}"/>
 					</p:commandButton>
+					
+					<p:commandButton icon="ui-icon-pencil" actionListener="#{estadoBean.editar}"
+						update=":formEstado:panelEstado"
+						oncomplete="PF('dialogo').show();" > 
+						<f:attribute name="estadoSelecionado" value="#{cursorEstado}"/>
+					</p:commandButton>
 				</p:column>
 				
 			</p:dataTable>

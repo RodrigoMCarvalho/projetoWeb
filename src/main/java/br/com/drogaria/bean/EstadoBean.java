@@ -67,6 +67,18 @@ public class EstadoBean implements Serializable {
 			erro.printStackTrace(); // ativar log do erro no servidor
 		}
 	}
+	
+	public void editar(ActionEvent evento) {
+		try {
+			EstadoDAO dao = new EstadoDAO();
+			estado = (Estado) evento.getComponent().getAttributes().get("estadoSelecionado");
+			dao.editar(estado);
+			Messages.addGlobalInfo("Estado alterado com sucesso");
+		} catch (RuntimeException erro) {
+			 Messages.addGlobalError("Erro para editar o estado: " + erro);
+			 erro.printStackTrace();
+		}
+	}
 
 	public Estado getEstado() {
 		return estado;

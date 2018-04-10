@@ -23,6 +23,11 @@ public class GenericDomain implements Serializable{
 		this.codigo = codigo;
 	}
 	
+	//OmniFaces
+	@Override
+	public String toString() {				//getClass().getSimpleName() - pega o nome da classe
+	    return String.format("%s[codigo=%d]", getClass().getSimpleName(), getCodigo());
+	}
 	
 
 }

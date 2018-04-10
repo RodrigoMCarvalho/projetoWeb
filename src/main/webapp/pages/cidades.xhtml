@@ -8,19 +8,27 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Cidades</title>
 </h:head>
-<body>
-	<h:form>
-		<p:panel header="Cidades - Listagem">
-			<p:dataTable emptyMessage="Nnenhum registro encontrado."
-				paginator="true">
+<h:body>
+	<p:growl id="grwol"/>
+	<h:form id="formPrincipal">
+		<p:panel header="Cidades - Listagem" >
+			<p:dataTable id="tabela" emptyMessage="Nnenhum registro encontrado."
+				paginator="true" value="#{cidadeBean.listCidades}" var="cursorCidade">
 
 				<f:facet name="header">
-					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();" />
+					<p:commandButton value="Novo" actionListener="#{cidadeBean.novo()}" 
+					oncomplete="PF('dialogo').show();" 
+					update=":grwol :form:painel"/>
 				</f:facet>
 
-				<p:column headerText="Nome">
+				<p:column headerText="Nome" filterBy="#{cursorCidade.nome}">
+					<h:outputText value="#{cursorCidade.nome}"/>
 				</p:column>
-				<p:column headerText="Estado">
+				<p:column headerText="Estado" sortBy="#{cursorCidade.estado.nome}" filterBy="#{cursorCidade.estado.nome}">
+					<h:outputText value="#{cursorCidade.estado.nome}"/>
+					<h:outputText value=" - "/>
+					<h:outputText value="#{cursorCidade.estado.sigla}"/>
+				
 				</p:column>
 				<p:column headerText="Opções">
 				</p:column>
@@ -32,17 +40,26 @@
 
 	<p:dialog header="Cidades - Cadastro" widgetVar="dialogo"
 		draggable="false" resizable="false" modal="true">
-		<h:form>
-			<h:panelGrid columns="2">
+		<h:form id="form">
+			<h:panelGrid columns="2" id="painel">
+			
 				<p:outputLabel value="Nome: " />
-				<p:inputText size="30" maxlength="50" />
+				<p:inputText size="30" maxlength="50" value="#{cidadeBean.cidade.nome}"/>
+				
 				<p:outputLabel value="Estado: " />
-				<p:selectOneMenu filter="true">
-					<f:selectItem itemLabel="Selecione um estado" itemValue=""/>
+				<p:selectOneMenu filter="true" converter="omnifaces.SelectItemsConverter" 
+				value="#{cidadeBean.cidade.estado}">
+				
+					<f:selectItem itemLabel="Selecione um estado" noSelectionOption="true"/><!-- opção apenas estética-->
+						<f:selectItems value="#{cidadeBean.listEstados}" var="cursorEstados"
+						itemLabel="#{cursorEstados.nome} - #{cursorEstados.sigla}" itemValue="#{cursorEstados}"/>
+						
 				</p:selectOneMenu>
 			</h:panelGrid>
+			
 			<h:panelGrid columns="2" >
-				<p:commandButton value="Salvar" />
+				<p:commandButton value="Salvar" actionListener="#{cidadeBean.salvar()}" 
+					update=":grwol :form:painel :formPrincipal:tabela"/>
 				<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" />
 			</h:panelGrid>
 		</h:form>
@@ -66,5 +83,5 @@
 
 
 
-</body>
+</h:body>
 </html>
