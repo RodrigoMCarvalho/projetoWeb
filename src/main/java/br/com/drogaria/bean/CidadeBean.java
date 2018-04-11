@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.event.ActionEvent;
 
 import org.omnifaces.util.Messages;
 
@@ -25,20 +26,21 @@ public class CidadeBean implements Serializable {
 	public void salvar() {
 		try {
 			CidadeDAO dao = new CidadeDAO();
-			dao.salvar(cidade);
+			dao.merge(cidade);
 			Messages.addGlobalInfo("Cidade salva com sucesso!");
 			novo();
-
 			listar();
-			EstadoDAO edao = new EstadoDAO(); // atualizar a lista de cidades e estados
-			edao.listar();
+//			listCidades = dao.listar();
+//			EstadoDAO edao = new EstadoDAO(); // atualizar a lista de cidades e estados
+//			edao.listar();
+			
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Erro para salvar a cidade.");
 			erro.printStackTrace();
 		}
 	}
 
-	// método para instanciar cidade
+	// método para instanciar cidade e atulizar lista após salvar/editar/excluir
 	public void novo() {
 		cidade = new Cidade();
 
@@ -49,12 +51,37 @@ public class CidadeBean implements Serializable {
 			Messages.addGlobalError("Erro ao carregar os estados");
 			erro.printStackTrace();
 		}
+		
 	}
 
 	@PostConstruct
 	public void listar() {
 		CidadeDAO dao = new CidadeDAO();
 		listCidades = dao.listar();
+	}
+	
+	public void excluir(ActionEvent evento) {
+		try {
+			cidade = (Cidade) evento.getComponent().getAttributes().get("cidadeSelecionada");
+			CidadeDAO dao = new CidadeDAO();
+			dao.excluir(cidade);
+			Messages.addGlobalInfo("Cidade excluída com sucesso");
+			novo();
+			listar();
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Erro para excluir a cidade");
+			erro.printStackTrace();
+		}
+	}
+	
+	public void editar(ActionEvent evento) {
+		try {
+			cidade = (Cidade) evento.getComponent().getAttributes().get("cidadeSelecionada");
+			listar();
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Erro para editar cidade");
+			erro.printStackTrace();
+		}
 	}
 
 	public List<Cidade> getListCidades() {

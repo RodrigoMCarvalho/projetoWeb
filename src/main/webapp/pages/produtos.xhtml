@@ -8,53 +8,112 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Produtos</title>
 </h:head>
+<p:growl id="mensagem" />
 <body>
-	<h:form>
+	<h:form id="formPrincipal">
 		<p:panel header="Produtos - Listagem">
-			<p:dataTable emptyMessage="Nnenhum registro encontrado."
-				paginator="true">
+			<p:dataTable id="tabela" emptyMessage="Nnenhum registro encontrado."
+				paginator="true" value="#{produtoBean.listProdutos}"
+				var="cursorProdutos">
 
 				<f:facet name="header">
-					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();" />
+					<p:commandButton value="Novo"
+						actionListener="#{produtoBean.novo()}"
+						oncomplete="PF('dialogo').show();" update=":mensagem :form:painel">
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						<!-- Atualiza o dialog devido ao required="true"-->
+					</p:commandButton>
 				</f:facet>
 
 				<p:column headerText="Descrição">
+					<h:outputText value="#{cursorProdutos.descricao}" />
 				</p:column>
 				<p:column headerText="Quantidade">
+					<h:outputText value="#{cursorProdutos.quantidade}" />
 				</p:column>
 				<p:column headerText="Preço">
+					<h:outputText value="#{cursorProdutos.preco}" />
 				</p:column>
 				<p:column headerText="Fabricante">
+					<h:outputText value="#{cursorProdutos.fabricante.descricao}" />
 				</p:column>
 				<p:column headerText="Opções">
 				</p:column>
 
+				<p:column headerText="Opções">
+					<p:column headerText="Opções">
+						<p:commandButton icon="ui-icon-trash"
+							actionListener="#{cidadeBean.excluir}">
+							<p:confirm header="Confirmação"
+								message="Deseja excluir o produto?" icon="ui-icon-alert" />
+							<f:attribute name="cidadeSelecionada" value="#{cursorCidade}" />
+						</p:commandButton>
+
+						<p:commandButton icon="ui-icon-pencil"
+							actionListener="#{cidadeBean.editar}"
+							oncomplete="PF('dialogo').show();">
+							<f:attribute name="cidadeSelecionada" value="#{cursorCidade}" />
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+							<!-- Atualiza o dialog devido ao required="true"-->
+						</p:commandButton>
+					</p:column>
+				</p:column>
+
 			</p:dataTable>
+
+			<!-- Abaixo apenas os botãos "Sim" e "Não" -->
+			<p:confirmDialog global="true">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+
 		</p:panel>
 
 	</h:form>
 
 	<p:dialog header="Produtos - Cadastro" widgetVar="dialogo"
 		draggable="false" resizable="false" modal="true">
-		<h:form>
-			<h:panelGrid columns="2">
-				<p:outputLabel value="Descrição: " />
-				<p:inputText size="30" maxlength="50" />
-				
-				<p:outputLabel value="Quantidade: "/>
-				<p:inputText maxlength="5" size="10"/>
-				
-				<p:outputLabel value="Preço: "/>
-				<p:inputText maxlength="7" size="10"/>
-				
-				<p:outputLabel value="Fabricante: "/>
-				<p:selectOneMenu>
-					<f:selectItem itemLabel="Selecione um fabricante"/>
+		<h:form id="form">
+			<h:panelGrid columns="2" id="painel">
+				<p:outputLabel for="desc" value="Descrição: " />
+				<p:inputText id="desc" size="30" maxlength="50" required="true"
+					requiredMessage="O campo Descrição é obrigatório."
+					value="#{produtoBean.produto.descricao}" />
+
+				<p:outputLabel for="qtd" value="Quantidade: " />
+				<p:inputText id="qtd" maxlength="5" size="10" required="true"
+					requiredMessage="O campo Quantidade é obrigatório."
+					value="#{produtoBean.produto.quantidade}" />
+
+				<p:outputLabel for="preco" value="Preço: " />
+				<p:inputText id="preco" maxlength="7" size="10" required="true"
+					requiredMessage="O campo Preço é obrigatório."
+					value="#{produtoBean.produto.preco}" />
+
+				<p:outputLabel for="fab" value="Fabricante: " />
+				<p:selectOneMenu id="fab" filter="true"
+					converter="omnifaces.SelectItemsConverter"
+					value="#{produtoBean.produto.fabricante}" required="true"
+					requiredMessage="O campo Fabricante é obrigatório.">
+
+					<f:selectItem itemLabel="Selecione um fabricante"
+						noSelectionOption="true" />
+					<!-- opção apenas estética-->
+					<f:selectItems value="#{produtoBean.listFabricantes}"
+						var="cursorFab" itemLabel="#{cursorFab.descricao}"
+						itemValue="#{cursorFab}" />
+
 				</p:selectOneMenu>
-				
+
 			</h:panelGrid>
-			<h:panelGrid columns="2" >
-				<p:commandButton value="Salvar" />
+			<h:panelGrid columns="2">
+				<p:commandButton value="Salvar"
+					actionListener="#{produtoBean.salvar()}" 
+					update=":mensagem :formPrincipal:tabela"/>
 				<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" />
 			</h:panelGrid>
 		</h:form>

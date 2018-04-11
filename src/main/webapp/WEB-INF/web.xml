@@ -21,5 +21,8 @@
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
-    
+    <!-- Carregamento do Hibernate -->
+    <listener>
+    	<listener-class>br.com.drogaria.util.HibernateContext</listener-class>
+    </listener>
 </web-app>
