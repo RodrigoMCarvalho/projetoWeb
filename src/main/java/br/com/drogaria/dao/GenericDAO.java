@@ -6,9 +6,11 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import br.com.drogaria.util.HibernateUtil;
+
 
 public class GenericDAO<Entidade> {
 
@@ -64,6 +66,22 @@ public class GenericDAO<Entidade> {
 		Session sessao = HibernateUtil.getSessionFactory().openSession();
 		try {
 			Criteria consulta = sessao.createCriteria(classe);
+			List<Entidade> resultado = consulta.list();
+			return resultado;
+		} catch (RuntimeException erro) {
+			throw erro;
+		} finally {
+			sessao.close();
+		}
+	}
+	
+	//método para listar em ordem ascendente
+	@SuppressWarnings("unchecked")
+	public List<Entidade> listar(String campoOrdenado) {
+		Session sessao = HibernateUtil.getSessionFactory().openSession();
+		try {
+			Criteria consulta = sessao.createCriteria(classe);
+			consulta.addOrder(Order.asc(campoOrdenado));
 			List<Entidade> resultado = consulta.list();
 			return resultado;
 		} catch (RuntimeException erro) {

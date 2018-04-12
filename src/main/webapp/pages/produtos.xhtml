@@ -33,7 +33,9 @@
 					<h:outputText value="#{cursorProdutos.quantidade}" />
 				</p:column>
 				<p:column headerText="Preço">
-					<h:outputText value="#{cursorProdutos.preco}" />
+					<h:outputText value="#{cursorProdutos.preco}">
+						<f:convertNumber locale="pt_BR" minFractionDigits="2"/>
+					</h:outputText>
 				</p:column>
 				<p:column headerText="Fabricante">
 					<h:outputText value="#{cursorProdutos.fabricante.descricao}" />
@@ -82,17 +84,25 @@
 				<p:outputLabel for="desc" value="Descrição: " />
 				<p:inputText id="desc" size="30" maxlength="50" required="true"
 					requiredMessage="O campo Descrição é obrigatório."
-					value="#{produtoBean.produto.descricao}" />
+					value="#{produtoBean.produto.descricao}" >
+				</p:inputText>
 
 				<p:outputLabel for="qtd" value="Quantidade: " />
 				<p:inputText id="qtd" maxlength="5" size="10" required="true"
 					requiredMessage="O campo Quantidade é obrigatório."
-					value="#{produtoBean.produto.quantidade}" />
+					value="#{produtoBean.produto.quantidade}" 
+					validatorMessage="Informe uma quantidade maior que 0.">
+					<f:validateLongRange  minimum="0" />
+				</p:inputText>	
 
 				<p:outputLabel for="preco" value="Preço: " />
 				<p:inputText id="preco" maxlength="7" size="10" required="true"
 					requiredMessage="O campo Preço é obrigatório."
-					value="#{produtoBean.produto.preco}" />
+					value="#{produtoBean.produto.preco}" 
+					validatorMessage="Informe um valor maior que 0.">
+					<f:validateDoubleRange  minimum="0.1" />
+					<f:convertNumber locale="pt_BR" minFractionDigits="2"/>
+				</p:inputText>	
 
 				<p:outputLabel for="fab" value="Fabricante: " />
 				<p:selectOneMenu id="fab" filter="true"
@@ -113,7 +123,7 @@
 			<h:panelGrid columns="2">
 				<p:commandButton value="Salvar"
 					actionListener="#{produtoBean.salvar()}" 
-					update=":mensagem :formPrincipal:tabela"/>
+					update=":mensagem :formPrincipal:tabela :form:painel"/>
 				<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" />
 			</h:panelGrid>
 		</h:form>
