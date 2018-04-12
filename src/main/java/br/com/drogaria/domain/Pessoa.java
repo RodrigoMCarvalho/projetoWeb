@@ -12,10 +12,10 @@ public class Pessoa extends GenericDomain{
 	@Column(length = 50, nullable = false)
 	private String nome;
 	
-	@Column(length = 14, nullable = false)
+	@Column(length = 14, nullable = false, unique=true)
 	private String cpf;
 	
-	@Column(length = 12, nullable = false)
+	@Column(length = 12, nullable = false, unique=true)
 	private String rg;
 	
 	@Column(nullable = false)

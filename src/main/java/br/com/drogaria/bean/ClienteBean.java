@@ -10,6 +10,7 @@ import javax.faces.bean.ViewScoped;
 import org.omnifaces.util.Messages;
 
 import br.com.drogaria.dao.ClienteDAO;
+import br.com.drogaria.dao.PessoaDAO;
 import br.com.drogaria.domain.Cliente;
 import br.com.drogaria.domain.Pessoa;
 
@@ -19,21 +20,31 @@ import br.com.drogaria.domain.Pessoa;
 public class ClienteBean implements Serializable {
 	
 	private List<Cliente> listClientes;
-	private Pessoa pessoa;
+	private List<Pessoa> listPessoas;
 	private Cliente cliente;
 	
 	public void salvar() {
 		try {
+			ClienteDAO dao = new ClienteDAO();
+			dao.merge(cliente);
+			novo();
+			listar();
 			
-			
-			
-		} catch (RuntimeException e) {
-			// TODO: handle exception
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Erro para salvar o cliente.");
+			erro.printStackTrace();
 		}
 	}
 	
 	public void novo() {
-		pessoa = new Pessoa();
+		cliente = new Cliente();
+		try {
+		PessoaDAO dao = new PessoaDAO();
+		listPessoas = dao.listar();
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Erro ao carregar a listagem de estados.");
+			erro.printStackTrace();
+		}
 	}
 	
 	@PostConstruct   //é chamado automáticamente quando clientebean é criado
@@ -41,6 +52,7 @@ public class ClienteBean implements Serializable {
 		try {
 			ClienteDAO dao = new ClienteDAO();
 			listClientes = dao.listar();
+			
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Erro ao carregar a listagem de clientes.");
 			erro.printStackTrace();
@@ -55,20 +67,20 @@ public class ClienteBean implements Serializable {
 		this.listClientes = listClientes;
 	}
 
-	public Pessoa getPessoa() {
-		return pessoa;
-	}
-
-	public void setPessoa(Pessoa pessoa) {
-		this.pessoa = pessoa;
-	}
-
 	public Cliente getCliente() {
 		return cliente;
 	}
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+
+	public List<Pessoa> getListPessoas() {
+		return listPessoas;
+	}
+
+	public void setListPessoas(List<Pessoa> listPessoas) {
+		this.listPessoas = listPessoas;
 	}
 	
 }

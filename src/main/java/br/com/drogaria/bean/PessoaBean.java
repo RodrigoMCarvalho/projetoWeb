@@ -32,10 +32,11 @@ public class PessoaBean implements Serializable{
 	public void novo() {
 		pessoa = new Pessoa();  //inicia pessoa
 		try {
+			estado = new Estado();
 			EstadoDAO edao = new EstadoDAO();
 			listEstados = edao.listar("nome");        //obtém a lista de estados ordenado por nome
 			
-			listCidades = new ArrayList<>();
+			listCidades = new ArrayList<>();		//inicia a lista de cidades
 		} catch (RuntimeException erro) {
 		Messages.addGlobalError("Erro para realizar o carregamento.");
 		erro.printStackTrace();
@@ -57,6 +58,7 @@ public class PessoaBean implements Serializable{
 		try {
 		PessoaDAO dao = new PessoaDAO();
 		dao.merge(pessoa);
+		Messages.addGlobalInfo("Pessoa salva com sucesso!");
 		novo();
 		listar();
 		}catch (RuntimeException erro) {

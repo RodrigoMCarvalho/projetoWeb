@@ -18,7 +18,7 @@
 
 				<f:facet name="header">
 					<p:commandButton value="Novo" actionListener="#{pessoaBean.novo()}"
-						oncomplete="PF('dialogo').show();" update=":mensagem :form:painel :form:estado">
+						oncomplete="PF('dialogo').show();" update=":mensagem :form:painel">
 						<f:actionListener
 							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 						<!-- Atualiza o dialog devido ao required="true"-->
@@ -76,7 +76,8 @@
 					value="#{pessoaBean.pessoa.nome}" />
 
 				<p:outputLabel for="rg" value="RG: " />
-				<p:inputText id="rg" maxlength="15" size="15" required="true"
+				<p:inputMask mask="99.999.999-9" id="rg" 
+					maxlength="12" size="15" required="true"
 					requiredMessage="O campo RG é obrigatório."
 					value="#{pessoaBean.pessoa.rg}" />
 
@@ -133,15 +134,15 @@
 					value="#{pessoaBean.pessoa.cep}" />
 
 				<p:outputLabel value="Complemento: " />
-				<p:inputText maxlength="20" size="15" required="true"
+				<p:inputText maxlength="20" size="15"
 					value="#{pessoaBean.pessoa.complemento}" />
 
 				<p:outputLabel value="Telefone: " />
-				<p:inputMask mask="(99)9999-9999" maxlength="15" size="15" required="true"
+				<p:inputMask mask="(99)9999-9999" maxlength="15" size="15" 
 					value="#{pessoaBean.pessoa.telefone}" />
 
 				<p:outputLabel value="Celular: " />
-				<p:inputMask mask="(99)99999-9999" maxlength="15" size="15" required="true"
+				<p:inputMask mask="(99)99999-9999" maxlength="15" size="15"
 					value="#{pessoaBean.pessoa.celular}" />
 
 				<p:outputLabel for="email" value="Email: " />

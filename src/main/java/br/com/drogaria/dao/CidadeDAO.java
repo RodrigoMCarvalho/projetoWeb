@@ -19,7 +19,7 @@ public class CidadeDAO extends GenericDAO<Cidade>{
 			Criteria consulta = sessao.createCriteria(Cidade.class); //criando um critério de cidade
 			consulta.add(Restrictions.eq("estado.codigo", codigoEstado));
 			//equivalente ao WHERE do SQL
-			//procurar na Cidade o "estado.codigo" equivalente ao "codigoEstado"
+			//procurar na Cidade o "estado.codigo" equivalente ao "codigoEstado" passado
 			consulta.addOrder(Order.asc("nome")); //ordenar pelo nome da Cidade
 			List<Cidade> resultado = consulta.list();
 			return resultado;
