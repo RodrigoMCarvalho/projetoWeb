@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.event.ActionEvent;
 
 import org.omnifaces.util.Messages;
 
@@ -55,6 +56,17 @@ public class ClienteBean implements Serializable {
 			
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Erro ao carregar a listagem de clientes.");
+			erro.printStackTrace();
+		}
+	}
+	
+	public void editar(ActionEvent evento) {
+		try {
+		cliente = (Cliente) evento.getComponent().getAttributes().get("clienteSelecionado");
+		PessoaDAO dao = new PessoaDAO();
+		listPessoas = dao.listar();
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Erro para editar o cliente");
 			erro.printStackTrace();
 		}
 	}

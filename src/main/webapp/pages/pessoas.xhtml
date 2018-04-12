@@ -46,11 +46,11 @@
 
 						<p:commandButton icon="ui-icon-pencil"
 							actionListener="#{pessoaBean.editar}"
-							oncomplete="PF('dialogo').show();" update=":form:painel">
+							oncomplete="PF('dialogo').show();" update=":mensagem :form:painel :form:estado">
 							<f:attribute name="pessoaSelecionada" value="#{cursorPessoas}" />
 							<f:actionListener
-								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-							<!-- Atualiza o dialog devido ao required="true"-->
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						<!-- Atualiza o dialog devido ao required="true"-->
 						</p:commandButton>
 					</p:column>
 				</p:column>
@@ -97,7 +97,7 @@
 					<!-- opção apenas estética-->
 					<f:selectItems value="#{pessoaBean.listEstados}" var="cursorEstado"
 						itemLabel="#{cursorEstado.nome}" itemValue="#{cursorEstado}" />
-					<p:ajax listener="#{pessoaBean.popular}" update=":form:cidade"/>
+						<p:ajax listener="#{pessoaBean.popular}" update=":form:cidade"/> 
 				</p:selectOneMenu>
 
 				<p:outputLabel for="cidade" value="Cidade: " />
@@ -105,7 +105,6 @@
 					converter="omnifaces.SelectItemsConverter"
 					value="#{pessoaBean.pessoa.cidade}" required="true"
 					requiredMessage="O campo Cidade é obrigatório.">
-
 					<f:selectItem itemLabel="Selecione uma cidade"
 						noSelectionOption="true" />
 					<!-- opção apenas estética-->

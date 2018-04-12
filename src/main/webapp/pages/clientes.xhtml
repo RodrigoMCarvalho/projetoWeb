@@ -7,26 +7,27 @@
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Clientes</title>
-	<h:outputScript library="js" name="scripts.js"/>  <!-- library é o nome da pasta e name o do arquivo -->
+	<h:outputScript library="js" name="scripts.js" />
+	<!-- library é o nome da pasta e name o do arquivo -->
 </h:head>
-<p:growl id="mensagem" /> 
+<p:growl id="mensagem" />
 <body>
 	<h:form id="formPrincipal">
 		<p:panel header="Clientes - Listagem">
 			<p:dataTable id="tabela" emptyMessage="Nnenhum registro encontrado."
-				paginator="true"
-				value="#{clienteBean.listClientes}" var="cursorCliente">
+				paginator="true" value="#{clienteBean.listClientes}"
+				var="cursorCliente">
 
 				<f:facet name="header">
-					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();" 
-					actionListener="#{clienteBean.novo}"
-					update=":mensagem :form:painel">
+					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
+						actionListener="#{clienteBean.novo}"
+						update=":mensagem :form:painel">
 						<f:actionListener
 							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 						<!-- Atualiza o dialog devido ao required="true"-->
 					</p:commandButton>
 				</f:facet>
- 
+
 				<p:column headerText="Nome">
 					<h:outputText value="#{cursorCliente.pessoa.nome}" />
 				</p:column>
@@ -35,17 +36,26 @@
 				</p:column>
 				<p:column headerText="Data de Cadastro">
 					<h:outputText value="#{cursorCliente.dataCadastro}">
-						<f:convertDateTime locale="pt_BR"/>
+						<f:convertDateTime locale="pt_BR" />
 					</h:outputText>
 				</p:column>
 				<p:column headerText="Liberado" style="width:80px">
-					<p:selectBooleanCheckbox value="#{cursorCliente.liberado}" disabled="true"/>
-				</p:column> 
+					<p:selectBooleanCheckbox value="#{cursorCliente.liberado}"
+						disabled="true" />
+				</p:column>
 				<p:column headerText="Opções">
-					<p:commandButton icon="ui-icon-trash" >
+					<p:commandButton icon="ui-icon-trash">
 						<p:confirm header="Confirmação" message="Deseja excluir o estado?"
 							icon="ui-icon-alert" />
-						<f:attribute name="estadoSelecionado" value="#{cursorEstado}"/>
+						<f:attribute name="estadoSelecionado" value="#{cursorEstado}" />
+					</p:commandButton>
+					<p:commandButton icon="ui-icon-pencil"
+						actionListener="#{clienteBean.editar}" update=":form:painel"
+						oncomplete="PF('dialogo').show();">
+						<f:attribute name="clienteSelecionado" value="#{cursorCliente}" />
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						<!-- Atualiza o dialog devido ao required="true"-->
 					</p:commandButton>
 				</p:column>
 
@@ -58,30 +68,35 @@
 		draggable="false" resizable="false" modal="true">
 		<h:form id="form">
 			<h:panelGrid id="painel" columns="2">
-			
-			<p:outputLabel for="pessoa" value="Pessoa " />
+
+				<p:outputLabel for="pessoa" value="Pessoa " />
 				<p:selectOneMenu id="pessoa" filter="true"
 					converter="omnifaces.SelectItemsConverter"
-					value="#{clienteBean.cliente.pessoa}"
-					required="true" requiredMessage="O campo Pessoa é obrigatório.">
-					<f:selectItem itemLabel="Selecione uma pessoa" noSelectionOption="true" />
+					value="#{clienteBean.cliente.pessoa}" required="true"
+					requiredMessage="O campo Pessoa é obrigatório.">
+					<f:selectItem itemLabel="Selecione uma pessoa"
+						noSelectionOption="true" />
 					<!-- opção acima apenas estética-->
-					<f:selectItems value="#{clienteBean.listPessoas}" var="cursorPessoa"
-						itemLabel="#{cursorPessoa.nome}" itemValue="#{cursorPessoa}" />
+					<f:selectItems value="#{clienteBean.listPessoas}"
+						var="cursorPessoa" itemLabel="#{cursorPessoa.nome}"
+						itemValue="#{cursorPessoa}" />
 				</p:selectOneMenu>
-				
-				<p:outputLabel for="data" value="Data de Cadastro: "/>
+
+				<p:outputLabel for="data" value="Data de Cadastro: " />
 				<p:calendar id="data" value="#{clienteBean.cliente.dataCadastro}"
-					required="true" requiredMessage="O campo Data de Cadastro é obrigatório." 
-					locale="pt_BR"/>
-				
-				<p:outputLabel for="ativo" value="Ativo: "/>
-				<p:selectBooleanCheckbox id="ativo" value="#{clienteBean.cliente.liberado}"/>
-				
+					required="true"
+					requiredMessage="O campo Data de Cadastro é obrigatório."
+					locale="pt_BR" />
+
+				<p:outputLabel for="ativo" value="Ativo: " />
+				<p:selectBooleanCheckbox id="ativo"
+					value="#{clienteBean.cliente.liberado}" />
+
 			</h:panelGrid>
-			<h:panelGrid columns="2" >
-				<p:commandButton value="Salvar" actionListener="#{clienteBean.salvar()}"
-					update=":mensagem :formPrincipal:tabela :form:painel"/>
+			<h:panelGrid columns="2">
+				<p:commandButton value="Salvar"
+					actionListener="#{clienteBean.salvar()}"
+					update=":mensagem :formPrincipal:tabela :form:painel" />
 				<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" />
 			</h:panelGrid>
 		</h:form>

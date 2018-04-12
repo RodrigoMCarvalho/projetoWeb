@@ -77,7 +77,8 @@ public class CidadeBean implements Serializable {
 	public void editar(ActionEvent evento) {
 		try {
 			cidade = (Cidade) evento.getComponent().getAttributes().get("cidadeSelecionada");
-			listar();
+			EstadoDAO dao = new EstadoDAO();
+			listEstados = dao.listar("nome");
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Erro para editar cidade");
 			erro.printStackTrace();
