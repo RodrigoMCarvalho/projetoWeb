@@ -8,6 +8,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -15,6 +16,7 @@ import javax.faces.event.ActionEvent;
 import org.omnifaces.util.Messages;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
+
 import br.com.drogaria.dao.FabricanteDAO;
 import br.com.drogaria.dao.ProdutoDAO;
 import br.com.drogaria.domain.Fabricante;
@@ -42,12 +44,17 @@ public class ProdutoBean implements Serializable {
 	
 	public void salvar() {
 		try {
+			if (produto.getCaminho() == null) {
+				Messages.addGlobalError("O campo foto é obrigatório.");
+				return;
+			}
+			
 			ProdutoDAO dao = new ProdutoDAO();
 	
 			Produto produtoRetorno = dao.merge(produto);  //vai preencher o produto com os dados salvos ou editados
 			
 			//para salvamento de imagens
-			Path origem = Paths.get(produto.getCaminho());
+			Path origem = Paths.get(produto.getCaminho());									//será criado um arquivo com o codigo do produto .png
 			Path destino = Paths.get("C:/Users/rodri_000/Desktop/Desenvolvimento Web/Projeto DrogariaV2/Uploads/" + produtoRetorno.getCodigo() + ".png");
 			Files.copy(origem, destino, StandardCopyOption.REPLACE_EXISTING);
 			
@@ -68,6 +75,7 @@ public class ProdutoBean implements Serializable {
 	
 	public void editar(ActionEvent evento) {
 		produto = (Produto) evento.getComponent().getAttributes().get("produtoSelecionado");
+		produto.setCaminho("C:/Users/rodri_000/Desktop/Desenvolvimento Web/Projeto DrogariaV2/Uploads/" + produto.getCodigo() + ".png");
 		try {
 			ProdutoDAO dao = new ProdutoDAO();
 			dao.listar();
@@ -84,9 +92,13 @@ public class ProdutoBean implements Serializable {
 		try {
 			ProdutoDAO dao = new ProdutoDAO();
 			dao.excluir(produto);
+			
+			Path arquivo = Paths.get("C:/Users/rodri_000/Desktop/Desenvolvimento Web/Projeto DrogariaV2/Uploads/" + produto.getCodigo() + ".png");
+			Files.deleteIfExists(arquivo);
+			
 			novo();
 			listar();
-		} catch (RuntimeException erro) {
+		} catch (RuntimeException | IOException  erro) {
 			Messages.addGlobalError("Erro para excluir o produto");
 			erro.printStackTrace();
 		}

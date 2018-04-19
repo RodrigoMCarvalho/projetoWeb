@@ -12,7 +12,7 @@
 <body>
 	<h:form id="formPrincipal">
 		<p:panel header="Produtos - Listagem">
-			<p:dataTable id="tabela" emptyMessage="Nnenhum registro encontrado."
+			<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
 				paginator="true" value="#{produtoBean.listProdutos}"
 				var="cursorProdutos">
 
@@ -118,10 +118,10 @@
 						itemValue="#{cursorFab}" />
 				</p:selectOneMenu>
 
-			<p:outputLabel for="foto" value="Foto:"/>
-			<p:fileUpload id="foto" mode="advanced" fileUploadListener="#{produtoBean.upload}"
+			<p:outputLabel for="upload" value="Upload: "/>
+			<p:fileUpload id="upload" mode="advanced" fileUploadListener="#{produtoBean.upload}"
 			 auto="true" update=":mensagem"/>
-			
+			 
 			</h:panelGrid>
 			<h:panelGrid columns="2">
 				<p:commandButton value="Salvar"

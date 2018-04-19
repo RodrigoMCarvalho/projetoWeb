@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Vendas</title>
+</h:head>
+
+<p:growl id="mensagem" />
+<body>
+
+<h:form id="formPrincipal" style="font-size: 13px">
+	<p:panel header="Produtos">
+		<p:dataTable id="tabelaProdutos" emptyMessage="Nenhum registro encontrado."
+			paginator="true" value="#{vendaBean.listProdutos}"
+			var="cursorProdutos" rows="3">
+
+			<p:column headerText="Descrição" sortBy="#{cursorProdutos.descricao}" filterBy="#{cursorProdutos.descricao}">
+				<h:outputText value="#{cursorProdutos.descricao}" />
+			</p:column>
+			<p:column headerText="Quantidade">
+				<h:outputText value="#{cursorProdutos.quantidade}" />
+			</p:column>
+			<p:column headerText="Preço">
+				<h:outputText value="#{cursorProdutos.preco}">
+					<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+				</h:outputText>
+			</p:column>
+			<p:column headerText="Fabricante">
+				<h:outputText value="#{cursorProdutos.fabricante.descricao}" />
+			</p:column>
+
+			<p:column headerText="Opções">
+				<p:commandButton icon="ui-icon-plus" actionListener="#{vendaBean.adicionar}"
+				update=":mensagem :formPrincipal:tabelaCompras">
+				<f:attribute name="produtoSelecionado" value="#{cursorProdutos}" />
+				</p:commandButton>
+			</p:column>
+
+		</p:dataTable>
+	</p:panel>
+
+	<p:panel header="Carrinho de Compras">
+	<p:dataTable id="tabelaCompras" emptyMessage="Nenhum registro encontrado."
+			paginator="true" value="#{vendaBean.listItemVendas}"
+			var="cursorItemVendas" rows="3">
+
+			<p:column headerText="Descrição">
+				<h:outputText value="#{cursorItemVendas.produto.descricao}" />
+			</p:column>
+			<p:column headerText="Preço">
+				<h:outputText value="#{cursorItemVendas.produto.preco}" >
+					<f:convertNumber locale="pt_BR" minFractionDigits="2"/>
+				</h:outputText>
+			</p:column>
+			<p:column headerText="Qtd">
+				<h:outputText value="#{cursorItemVendas.quantidade}" />
+			</p:column>
+			<p:column headerText="Preço Parcial">
+				<h:outputText value="#{cursorItemVendas.valorParcial}" >
+					<f:convertNumber locale="pt_BR" minFractionDigits="2"/>
+				</h:outputText>
+			</p:column>
+
+			<p:column headerText="Opções">
+				<p:commandButton icon="ui-icon-minus"/>
+				
+			</p:column>
+
+		</p:dataTable>
+	</p:panel>
+
+	<p:panel header="Total">
+	</p:panel>
+</h:form>
+</body>
+</html>
