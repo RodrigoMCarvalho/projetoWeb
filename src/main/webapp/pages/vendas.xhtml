@@ -18,7 +18,7 @@
 			paginator="true" value="#{vendaBean.listProdutos}"
 			var="cursorProdutos" rows="3">
 
-			<p:column headerText="Descrição" sortBy="#{cursorProdutos.descricao}" filterBy="#{cursorProdutos.descricao}">
+			<p:column headerText="Descrição" sortBy="#{cursorProdutos.descricao}" >
 				<h:outputText value="#{cursorProdutos.descricao}" />
 			</p:column>
 			<p:column headerText="Quantidade">
@@ -35,7 +35,7 @@
 
 			<p:column headerText="Opções">
 				<p:commandButton icon="ui-icon-plus" actionListener="#{vendaBean.adicionar}"
-				update=":mensagem :formPrincipal:tabelaCompras">
+				update=":mensagem :formPrincipal:tabelaCompras :formPrincipal:finalizar">
 				<f:attribute name="produtoSelecionado" value="#{cursorProdutos}" />
 				</p:commandButton>
 			</p:column>
@@ -43,15 +43,15 @@
 		</p:dataTable>
 	</p:panel>
 
-	<p:panel header="Carrinho de Compras">
+	<p:panel header="Carrinho de Compras" >
 	<p:dataTable id="tabelaCompras" emptyMessage="Nenhum registro encontrado."
 			paginator="true" value="#{vendaBean.listItemVendas}"
-			var="cursorItemVendas" rows="3">
+			var="cursorItemVendas" rows="2">
 
 			<p:column headerText="Descrição">
 				<h:outputText value="#{cursorItemVendas.produto.descricao}" />
 			</p:column>
-			<p:column headerText="Preço">
+			<p:column headerText="Preço Unitário">
 				<h:outputText value="#{cursorItemVendas.produto.preco}" >
 					<f:convertNumber locale="pt_BR" minFractionDigits="2"/>
 				</h:outputText>
@@ -66,14 +66,27 @@
 			</p:column>
 
 			<p:column headerText="Opções">
-				<p:commandButton icon="ui-icon-minus"/>
-				
+				<p:commandButton icon="ui-icon-minus" actionListener="#{vendaBean.diminiur}"
+				update=":mensagem :formPrincipal:tabelaCompras :formPrincipal:finalizar">
+				<f:attribute name="itemSelecionado" value="#{cursorItemVendas}" />
+				</p:commandButton>
+					<p:commandButton icon="ui-icon-trash" actionListener="#{vendaBean.remover}"
+				update=":mensagem :formPrincipal:tabelaCompras :formPrincipal:finalizar">
+				<f:attribute name="itemSelecionado" value="#{cursorItemVendas}" />
+				</p:commandButton>
 			</p:column>
 
 		</p:dataTable>
 	</p:panel>
 
-	<p:panel header="Total">
+	<p:panel header="Finalização" id="finalizar" >
+			<p:outputLabel value="Total: R$ " style="font-size: 20px; font-weight: bold"/>
+			<h:outputText value="#{vendaBean.venda.precoTotal}" style="font-size: 20px; font-weight: bold">
+				<f:convertNumber locale="pt_BR" minFractionDigits="2"/>
+			</h:outputText>	
+			<p:outputLabel value=" "/>
+			<p:commandButton value="Finalizar"/>
+
 	</p:panel>
 </h:form>
 </body>
