@@ -3,6 +3,7 @@ package br.com.drogaria.bean;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -12,7 +13,12 @@ import javax.faces.event.ActionEvent;
 
 import org.omnifaces.util.Messages;
 
+import br.com.drogaria.dao.ClienteDAO;
+import br.com.drogaria.dao.FuncionarioDAO;
 import br.com.drogaria.dao.ProdutoDAO;
+import br.com.drogaria.dao.VendaDAO;
+import br.com.drogaria.domain.Cliente;
+import br.com.drogaria.domain.Funcionario;
 import br.com.drogaria.domain.ItemVenda;
 import br.com.drogaria.domain.Produto;
 import br.com.drogaria.domain.Venda;
@@ -25,6 +31,8 @@ public class VendaBean implements Serializable {
 
 	private List<Produto> listProdutos;
 	private List<ItemVenda> listItemVendas;
+	private List<Cliente> listClientes;
+	private List<Funcionario> listFuncionarios;
 	private Produto produto;
 	private Venda venda;
 
@@ -37,6 +45,7 @@ public class VendaBean implements Serializable {
 			ProdutoDAO dao = new ProdutoDAO();
 			listProdutos = dao.listar();
 			listItemVendas = new ArrayList<>();
+			
 		} catch (RuntimeException e) {
 			Messages.addGlobalError("Erro para carregar os produtos");
 		}
@@ -114,6 +123,53 @@ public class VendaBean implements Serializable {
 		}
 	}
 	
+	//método para carregar a listagem de funcionarios
+	public void finalizar() {
+		try {
+			venda.setHorario(new Date());
+			
+			FuncionarioDAO fdao = new FuncionarioDAO();
+			listFuncionarios = fdao.listarOrdenado();
+			
+			ClienteDAO cdao = new ClienteDAO();
+			listClientes = cdao.listarOrdenado();
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Erro para carregar lista de funcionários");
+			erro.printStackTrace();
+		}
+	}
+	
+	public void salvar() {
+		try {
+			if (venda.getPrecoTotal().signum() == 0) { //comparação com BigDecimal
+				Messages.addGlobalError("Carrinho de compras vazio!");
+			}
+			VendaDAO dao = new VendaDAO();
+			dao.salvar(venda, listItemVendas);
+			novo();
+			Messages.addGlobalInfo("Venda realizada com sucesso!");
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Erro para salvar a venda");
+			erro.printStackTrace();
+		}
+	}
+	
+	public List<Cliente> getListClientes() {
+		return listClientes;
+	}
+
+	public void setListClientes(List<Cliente> listClientes) {
+		this.listClientes = listClientes;
+	}
+
+	public List<Funcionario> getListFuncionarios() {
+		return listFuncionarios;
+	}
+
+	public void setListFuncionarios(List<Funcionario> listFuncionarios) {
+		this.listFuncionarios = listFuncionarios;
+	}
+
 	public List<Produto> getListProdutos() {
 		return listProdutos;
 	}

@@ -70,7 +70,7 @@
 				update=":mensagem :formPrincipal:tabelaCompras :formPrincipal:finalizar">
 				<f:attribute name="itemSelecionado" value="#{cursorItemVendas}" />
 				</p:commandButton>
-					<p:commandButton icon="ui-icon-trash" actionListener="#{vendaBean.remover}"
+					<p:commandButton icon="ui-icon-trash"  actionListener="#{vendaBean.remover}"
 				update=":mensagem :formPrincipal:tabelaCompras :formPrincipal:finalizar">
 				<f:attribute name="itemSelecionado" value="#{cursorItemVendas}" />
 				</p:commandButton>
@@ -79,15 +79,57 @@
 		</p:dataTable>
 	</p:panel>
 
-	<p:panel header="Finalização" id="finalizar" >
+	<p:panel header="Finalização" id="finalizar">
 			<p:outputLabel value="Total: R$ " style="font-size: 20px; font-weight: bold"/>
 			<h:outputText value="#{vendaBean.venda.precoTotal}" style="font-size: 20px; font-weight: bold">
 				<f:convertNumber locale="pt_BR" minFractionDigits="2"/>
 			</h:outputText>	
 			<p:outputLabel value=" "/>
-			<p:commandButton value="Finalizar"/>
-
+			<p:commandButton value="Finalizar" oncomplete="PF('dialogo').show();" 
+			update=":mensagem :formFunc:panelFunc" actionListener="#{vendaBean.finalizar}"/>
 	</p:panel>
 </h:form>
+	<p:dialog header="Finalizar Venda" widgetVar="dialogo"
+		draggable="false" resizable="false" modal="true" closable="true">
+			<h:form id="formFunc">
+				<h:panelGrid columns="2" id="panelFunc">
+				
+					<p:outputLabel for="funcionario" value="Funcionario: "/>
+					<p:selectOneMenu id="funcionario" value="#{vendaBean.venda.funcionario}" 
+						converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains"
+						required="true" requiredMessage="O campo Funcionário é obrigatório.">
+						<f:selectItem itemLabel="Selecione um funcionario" noSelectionOption="true"/>
+						<f:selectItems value="#{vendaBean.listFuncionarios}" var="cursorFuncionarios"
+						 itemLabel="#{cursorFuncionarios.pessoa.nome}" itemValue="#{cursorFuncionarios}" />
+					</p:selectOneMenu>
+					
+					<p:outputLabel for="cliente" value="Cliente: "/>
+					<p:selectOneMenu id="cliente" value="#{vendaBean.venda.cliente}"
+						converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains" >
+						<f:selectItem itemLabel="Selecione um cliente" noSelectionOption="true" />
+						<f:selectItems value="#{vendaBean.listClientes}" var="cursorClientes"
+						 itemLabel="#{cursorClientes.pessoa.nome}" itemValue="#{cursorClientes}"/>
+					</p:selectOneMenu>
+					
+					<p:outputLabel value="Data e Hora: "/>
+						<h:outputText value="#{vendaBean.venda.horario}">
+							<f:convertDateTime pattern="dd/MM/yyyy HH:mm" 
+							locale="pt_BR" timeZone="America/Sao_Paulo"/>
+						</h:outputText>
+					
+					<p:outputLabel value="Valor Total: R$"/>
+						<h:outputText value="#{vendaBean.venda.precoTotal}">
+							<f:convertNumber locale="pt_BR" minFractionDigits="2"/>
+					</h:outputText>
+					
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+					<p:commandButton value="Salvar" actionListener="#{vendaBean.salvar}"
+						update=":mensagem :formPrincipal:tabelaCompras :formPrincipal:finalizar :formFunc:panelFunc" 
+						oncomplete="PF('dialogo').hide();"/>
+					<p:commandButton value="Voltar" oncomplete="PF('dialogo').hide();"/>
+				</h:panelGrid>
+			</h:form>
+	</p:dialog>
 </body>
 </html>
