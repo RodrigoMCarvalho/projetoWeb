@@ -33,5 +33,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/rodri_000/Desktop/Desenvolvimento Web/Projeto DrogariaV2/jasperreports-6.1.1.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

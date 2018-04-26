@@ -8,6 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @SuppressWarnings("serial")
 @Entity
@@ -22,6 +23,17 @@ public class Cliente extends GenericDomain{
 	@OneToOne
 	@JoinColumn(nullable = false)
 	private Pessoa pessoa;
+	
+	@Transient  //informar ao Hibernate que não é um campo do banco de dados
+	public String getLiberadoFormatado() {
+		String liberadoFormatado = null;
+		if (liberado == true) {
+			liberadoFormatado = "Sim";
+		} else {
+			liberadoFormatado = "Não";
+		}
+		return liberadoFormatado;
+	}
 
 	public Date getDataCadastro() {
 		return dataCadastro;

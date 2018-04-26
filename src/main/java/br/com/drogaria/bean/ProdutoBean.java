@@ -7,12 +7,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+//import java.sql.Connection;
+//import java.util.HashMap;
 import java.util.List;
+//import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
+
+//import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
@@ -21,6 +26,12 @@ import br.com.drogaria.dao.FabricanteDAO;
 import br.com.drogaria.dao.ProdutoDAO;
 import br.com.drogaria.domain.Fabricante;
 import br.com.drogaria.domain.Produto;
+//import br.com.drogaria.util.HibernateUtil;
+//import net.sf.jasperreports.engine.JRException;
+//import net.sf.jasperreports.engine.JasperFillManager;
+//import net.sf.jasperreports.engine.JasperPrint;
+//import net.sf.jasperreports.engine.JasperPrintManager;
+//import net.sf.jasperreports.engine.JasperPrint;
 
 @SuppressWarnings("serial")
 @ManagedBean
@@ -51,7 +62,7 @@ public class ProdutoBean implements Serializable {
 			
 			ProdutoDAO dao = new ProdutoDAO();
 	
-			Produto produtoRetorno = dao.merge(produto);  //vai preencher o produto com os dados salvos ou editados
+			Produto produtoRetorno = dao.merge(produto);  //vai preencher o produto com os dados salvos ou editados para o salvamento de imagens
 			
 			//para salvamento de imagens
 			Path origem = Paths.get(produto.getCaminho());									//será criado um arquivo com o codigo do produto .png
@@ -118,6 +129,21 @@ public class ProdutoBean implements Serializable {
 			erro.printStackTrace();
 		}
 	}
+	
+//	public void imprimir() {
+//		try {
+//		String caminho = Faces.getRealPath("reports/produtos.jrxml"); //captura o caminho de execução
+//		Map<String, Object> parametros = new HashMap<>(); //guarda um nome e um valor associado
+//		Connection conexao = HibernateUtil.getConection(); //cria uma Connection
+//		caminho = caminho.replaceAll("jrxml", "jasper");
+//		
+//		JasperPrint relatorio =JasperFillManager.fillReport(caminho, parametros, conexao);   //classe do Jasper para preencher relatórios
+//		JasperPrintManager.printReport(relatorio, true);
+//	} catch (JRException  erro) {
+//		Messages.addGlobalError("Ocorreu um erro para gerar o relatório");
+//		erro.printStackTrace();
+//		}
+//	}
 
 	public Produto getProduto() {
 		return produto;

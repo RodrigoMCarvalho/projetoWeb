@@ -1,0 +1,18 @@
+@charset "UTF-8";
+	.ui-widget, .ui-widget .ui-widget {
+	font-size: 15px !important;
+}
+
+.imagemCentral{
+	display : block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.divTopo{
+	padding-bottom: 5px;
+}
+
+.divCabecalho{
+	padding-bottom: 5px;
+}

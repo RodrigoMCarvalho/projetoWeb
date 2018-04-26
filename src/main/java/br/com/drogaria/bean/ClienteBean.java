@@ -30,7 +30,7 @@ public class ClienteBean implements Serializable {
 			dao.merge(cliente);
 			novo();
 			listar();
-			
+			Messages.addGlobalInfo("Cliente salvo com sucesso!");
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Erro para salvar o cliente.");
 			erro.printStackTrace();
