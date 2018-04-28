@@ -13,6 +13,9 @@ public class Usuario extends GenericDomain{
 	@Column(length = 32, nullable = false)
 	private String senha;
 	
+	@Transient
+	private String senhaSemCriptografia;
+	
 	@Column(nullable = false)
 	private Character tipo;
 	
@@ -46,13 +49,22 @@ public class Usuario extends GenericDomain{
 		}
 		return ativoFormatado;
 	}
-
+	
 	public String getSenha() {
 		return senha;
 	}
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+	
+	
+	public String getSenhaSemCriptografia() {
+		return senhaSemCriptografia;
+	}
+
+	public void setSenhaSemCriptografia(String senhaSemCriptografia) {
+		this.senhaSemCriptografia = senhaSemCriptografia;
 	}
 
 	public Character getTipo() {

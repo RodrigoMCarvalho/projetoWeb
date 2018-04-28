@@ -2,6 +2,7 @@ package br.com.drogaria.dao;
 
 import java.util.List;
 
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -13,19 +14,28 @@ public class UsuarioDAOTest {
 	@Ignore
 	public void salvar() {
 		PessoaDAO pdao = new PessoaDAO();
-		Pessoa pessoa = pdao.buscar(1L);
+		Pessoa pessoa = pdao.buscar(3L);
+		
+		System.out.println("Pessoa encontrada:");
+		System.out.println("Nome: " + pessoa.getNome());
+		System.out.println("CPF: " + pessoa.getCpf());
 		
 		Usuario user = new Usuario();
 		user.setAtivo(true);
-		user.setSenha("12345");
-		user.setTipo('A');
 		user.setPessoa(pessoa);
+		user.setSenhaSemCriptografia("1234");
+		user.setTipo('B');
+		
+		//configura o tipo de criptografia, MD5 e o objeto NÃO criptografado
+		SimpleHash hash = new SimpleHash("md5", user.getSenhaSemCriptografia());  
+		user.setSenha(hash.toHex());
 		
 		UsuarioDAO dao = new UsuarioDAO();
 		dao.salvar(user);
 	}
 	
 	@Test
+	@Ignore
 	public void listar() {
 		UsuarioDAO dao = new UsuarioDAO();
 		List<Usuario> listUser = dao.listar();
