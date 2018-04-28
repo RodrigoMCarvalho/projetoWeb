@@ -40,12 +40,12 @@ public class VendaBean implements Serializable {
 	public void novo() {
 		venda = new Venda();
 		venda.setPrecoTotal(new BigDecimal("0"));
-		
+
 		try {
 			ProdutoDAO dao = new ProdutoDAO();
 			listProdutos = dao.listar();
 			listItemVendas = new ArrayList<>();
-			
+
 		} catch (RuntimeException e) {
 			Messages.addGlobalError("Erro para carregar os produtos");
 		}
@@ -72,10 +72,10 @@ public class VendaBean implements Serializable {
 		} else {
 			ItemVenda itemVenda = listItemVendas.get(posicaoEncontrada);
 			itemVenda.setQuantidade((short) (itemVenda.getQuantidade() + 1));
-			itemVenda.setValorParcial(produto.getPreco().multiply(new BigDecimal(itemVenda.getQuantidade()))); 
+			itemVenda.setValorParcial(produto.getPreco().multiply(new BigDecimal(itemVenda.getQuantidade())));
 			// mutiplicação valor do produto com a quantidade do item
 		}
-		calcular(); //calcular o valor total da compra
+		calcular(); // calcular o valor total da compra
 	}
 
 	public void diminiur(ActionEvent evento) {
@@ -87,18 +87,20 @@ public class VendaBean implements Serializable {
 				posicaoEncontrada = posicao;
 			}
 		}
-		 // Se o objeto existir na lista, acontecerá o efeito inverso do método adicionar
-        // Diminuindo a quantidade e o valor a cada clique correspondente a uma unidade do produto
+		// Se o objeto existir na lista, acontecerá o efeito inverso do método adicionar
+		// Diminuindo a quantidade e o valor a cada clique correspondente a uma unidade
+		// do produto
 		if (posicaoEncontrada >= 0) {
 			itemVenda.setQuantidade((short) (itemVenda.getQuantidade() - 1));
 			itemVenda.setValorParcial(itemVenda.getValorParcial().subtract(itemVenda.getProduto().getPreco()));
-            
-			// se a quantidade chegar a zero o item não deve mais existir na lista (carrinho de compras)
+
+			// se a quantidade chegar a zero o item não deve mais existir na lista (carrinho
+			// de compras)
 			if (itemVenda.getQuantidade() == 0) {
 				listItemVendas.remove(posicaoEncontrada);
 			}
 		}
-		calcular(); //calcular o valor total da compra
+		calcular(); // calcular o valor total da compra
 	}
 
 	public void remover(ActionEvent evento) {
@@ -109,28 +111,30 @@ public class VendaBean implements Serializable {
 			if (listItemVendas.get(posicao).getProduto().equals(itemVenda.getProduto()))
 				posicaoEncontrada = posicao;
 		}
-	listItemVendas.remove(posicaoEncontrada);
-	
-	calcular(); //calcular o valor total da compra
+		listItemVendas.remove(posicaoEncontrada);
+
+		calcular(); // calcular o valor total da compra
 	}
-	
+
 	public void calcular() {
 		venda.setPrecoTotal(new BigDecimal("0"));
-		
+
 		for (int posicao = 0; posicao < listItemVendas.size(); posicao++) {
-			ItemVenda itemVenda = listItemVendas.get(posicao); //a cada repetição, vai obtendo um item do carrinho de compra
-			venda.setPrecoTotal(venda.getPrecoTotal().add(itemVenda.getValorParcial())); //soma de dois valores BigDecimais
+			ItemVenda itemVenda = listItemVendas.get(posicao); // a cada repetição, vai obtendo um item do carrinho de
+																// compra
+			venda.setPrecoTotal(venda.getPrecoTotal().add(itemVenda.getValorParcial())); // soma de dois valores
+																							// BigDecimais
 		}
 	}
-	
-	//método para carregar a listagem de funcionarios
+
+	// método para carregar a listagem de funcionarios
 	public void finalizar() {
 		try {
 			venda.setHorario(new Date());
-			
+
 			FuncionarioDAO fdao = new FuncionarioDAO();
 			listFuncionarios = fdao.listarOrdenado();
-			
+
 			ClienteDAO cdao = new ClienteDAO();
 			listClientes = cdao.listarOrdenado();
 		} catch (RuntimeException erro) {
@@ -138,23 +142,42 @@ public class VendaBean implements Serializable {
 			erro.printStackTrace();
 		}
 	}
-	
+
 	public void salvar() {
 		try {
-			if (venda.getPrecoTotal().signum() == 0) { //comparação com BigDecimal
+			if (venda.getPrecoTotal().signum() == 0) { // comparação com BigDecimal
 				Messages.addGlobalError("Carrinho de compras vazio!");
-				return;  //se o total for 0, retorna com a mensagem acima e nao continua e salva no BD
+				return; // se o total for 0, retorna com a mensagem acima e nao continua e salva no BD
 			}
-			VendaDAO dao = new VendaDAO();
-			dao.salvar(venda, listItemVendas);
-			novo();
-			Messages.addGlobalInfo("Venda realizada com sucesso!");
+			
+			//para uma venda será salvo N itens
+			for (int posicao = 0; posicao < listItemVendas.size(); posicao++) {
+				ItemVenda itemVenda = listItemVendas.get(posicao); // obtém o item da linha corrente do for
+				itemVenda.setVenda(venda); // necessário realizar esse procedimento por causa que o código(PK) vem como
+											// null após o salvamento o hibernate seta o código correto
+
+				Produto produto = itemVenda.getProduto();
+				int quantidade = produto.getQuantidade() - itemVenda.getQuantidade();
+
+				if (quantidade < 0) {
+					produto.setQuantidade((short) quantidade);
+					Messages.addGlobalWarn("Quantidade insuficiente no estoque.");
+					novo();
+				} else {
+					VendaDAO dao = new VendaDAO();
+					dao.salvar(venda, listItemVendas);
+					novo();
+					Messages.addGlobalInfo("Venda realizada com sucesso!");
+				}
+
+			}
+
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Erro para salvar a venda");
 			erro.printStackTrace();
 		}
 	}
-	
+
 	public List<Cliente> getListClientes() {
 		return listClientes;
 	}
@@ -202,5 +225,5 @@ public class VendaBean implements Serializable {
 	public void setVenda(Venda venda) {
 		this.venda = venda;
 	}
-	
+
 }

@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
+import javax.validation.constraints.DecimalMin;
 
 @SuppressWarnings("serial")
 @Entity
@@ -16,6 +17,7 @@ public class Produto extends GenericDomain{
 	private String descricao;
 	
 	@Column(nullable = false)
+	@DecimalMin(value="0", message="Quantidade insuficiente em estoque.")
 	private Short quantidade;
 	
 	@Column(nullable = false, precision = 6, scale = 2)

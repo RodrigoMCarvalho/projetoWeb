@@ -7,28 +7,36 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html;  charset=utf-8" />
-	<title>Produto</title>
+	<title>Histórico</title>
 </h:head>
 <h:body>
 	<p:growl id="mensagem" />
 	<h:form id="form">
-		<p:panel header="Produtos - Buscar">
+		<p:panel header="Histórico">
 			<h:panelGrid columns="3">
 				<p:outputLabel for="codigo" value="Código: " />
 				<p:inputText id="codigo" size="10" maxlength="10" required="true"
 					requiredMessage="O campo Código é obrigatório." 
-					value="#{produtoBean2.produto.codigo}"/>
-				<p:commandButton icon="ui-icon-search" actionListener="#{produtoBean2.buscar}" update=":mensagem :form:painel" />
+					value="#{historicoBean.produto.codigo}"/>
+				<p:commandButton icon="ui-icon-search" actionListener="#{historicoBean.buscar}" update=":mensagem :form:painel" />
 			</h:panelGrid>	
 			<h:panelGrid id="painel" columns="2">
 				<p:outputLabel value="Descrição: " />
-				<h:outputText value="#{produtoBean2.produto.descricao}" />	
+				<h:outputText value="#{historicoBean.produto.descricao}" />	
 				
 				<p:outputLabel value="Preço: "/>
-				<h:outputText value="#{produtoBean2.produto.preco}" />
+				<h:outputText value="#{historicoBean.produto.preco}" />
 				
 				<p:outputLabel value="Quantidade: "/>
-				<h:outputText value="#{produtoBean2.produto.quantidade}" />	
+				<h:outputText value="#{historicoBean.produto.quantidade}" />	
+				
+				<p:outputLabel value="Faricante: "/>
+				<h:outputText value="#{historicoBean.produto.fabricante.descricao}" />
+				
+			</h:panelGrid>
+			
+			<h:panelGrid>
+				<p:commandButton value="Salvar"/>
 			</h:panelGrid>
 		</p:panel>
 	</h:form>
