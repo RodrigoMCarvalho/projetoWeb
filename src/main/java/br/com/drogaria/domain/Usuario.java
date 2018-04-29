@@ -90,6 +90,8 @@ public class Usuario extends GenericDomain{
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
 	}
+
+	
 	
 	
 }

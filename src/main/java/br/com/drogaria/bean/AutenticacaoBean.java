@@ -36,11 +36,15 @@ public class AutenticacaoBean {
 				return;
 			}
 			
-			
 		} catch (RuntimeException | IOException erro){
 			Messages.addGlobalError(erro.getMessage());
 			erro.printStackTrace();
 		} 
+	}
+	
+	public String sair() {
+		usuarioLogado = null;
+		return "/pages/autenticacao.xhtml?faces-redirect=true";
 	}
 
 	public Usuario getUsuario() {
