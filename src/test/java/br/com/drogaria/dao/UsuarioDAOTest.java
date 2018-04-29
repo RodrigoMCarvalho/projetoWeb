@@ -43,4 +43,32 @@ public class UsuarioDAOTest {
 			System.out.println(usuario);
 		}
 	}
+	
+	@Test
+	public void autenticar() {
+		String cpf = "999.999.999-99";
+		String senha = "1234";
+		
+		UsuarioDAO dao = new UsuarioDAO();
+		Usuario usuario = dao.autenticar(cpf, senha);
+		
+		if (usuario != null) {
+			System.out.println("Usuário autenticado com sucesso!");
+		} else {
+			System.out.println("Usuário e/ou senha inválidos!");
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

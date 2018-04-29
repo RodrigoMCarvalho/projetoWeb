@@ -128,7 +128,7 @@
 			<version>4.1</version>
 		</dependency>
 
-		<!-- Apache Shiro Core -->
+		<!-- Apache Shiro Core ( Criptografia com MD5) -->
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-core</artifactId>
