@@ -32,6 +32,7 @@ public class VendaBean implements Serializable {
 	private List<Produto> listProdutos;
 	private List<ItemVenda> listItemVendas;
 	private List<Cliente> listClientes;
+	private List<Venda> listVendas;
 	private List<Funcionario> listFuncionarios;
 	private Produto produto;
 	private Venda venda;
@@ -45,9 +46,20 @@ public class VendaBean implements Serializable {
 			ProdutoDAO dao = new ProdutoDAO();
 			listProdutos = dao.listar();
 			listItemVendas = new ArrayList<>();
-
-		} catch (RuntimeException e) {
+			
+		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Erro para carregar os produtos");
+			erro.printStackTrace();
+		}
+	}
+	
+	public void listar() {
+		try {
+			VendaDAO vdao = new VendaDAO();
+			listVendas = vdao.listar();
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Erro para carregar as vendas");
+			erro.printStackTrace();
 		}
 	}
 
@@ -120,10 +132,8 @@ public class VendaBean implements Serializable {
 		venda.setPrecoTotal(new BigDecimal("0"));
 
 		for (int posicao = 0; posicao < listItemVendas.size(); posicao++) {
-			ItemVenda itemVenda = listItemVendas.get(posicao); // a cada repetição, vai obtendo um item do carrinho de
-																// compra
-			venda.setPrecoTotal(venda.getPrecoTotal().add(itemVenda.getValorParcial())); // soma de dois valores
-																							// BigDecimais
+			ItemVenda itemVenda = listItemVendas.get(posicao); // a cada repetição, vai obtendo um item do carrinho de compra
+			venda.setPrecoTotal(venda.getPrecoTotal().add(itemVenda.getValorParcial())); // soma de dois valores BigDecimais
 		}
 	}
 
@@ -169,9 +179,7 @@ public class VendaBean implements Serializable {
 					novo();
 					Messages.addGlobalInfo("Venda realizada com sucesso!");
 				}
-
 			}
-
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Erro para salvar a venda");
 			erro.printStackTrace();
@@ -226,4 +234,12 @@ public class VendaBean implements Serializable {
 		this.venda = venda;
 	}
 
+	public List<Venda> getListVendas() {
+		return listVendas;
+	}
+
+	public void setListVendas(List<Venda> listVendas) {
+		this.listVendas = listVendas;
+	}
+	
 }
