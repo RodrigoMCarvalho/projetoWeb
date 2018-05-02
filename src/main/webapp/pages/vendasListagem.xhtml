@@ -20,7 +20,11 @@
 				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
 					paginator="true" rows="10" value="#{vendaBean.listVendas}" var="cursorVendas"
 					paginatorPosition="bottom">
-
+					
+					<p:column style="width:16px">
+						<p:rowToggler />
+					</p:column>
+					
 					<p:column headerText="Código" sortBy="#{cursorVendas.codigo}" style="width:80px">
 						<h:outputText value="#{cursorVendas.codigo}" />
 					</p:column>
@@ -64,6 +68,23 @@
 							</p:commandButton>
 						</p:column>
 					</p:column>
+					
+					<!--  OBS: é necessário fazer um cursor do cursor de venda -->
+					<p:rowExpansion> 
+						<p:dataTable emptyMessage="Nenhum registro encontrado."
+							value="#{cursorVendas.itensVenda}" var="cursorItensVenda"> 
+							<p:column headerText="Produto">
+								<h:outputText value="#{cursorItensVenda.produto.descricao}" />
+							</p:column>
+							<p:column headerText="Quantidade">
+								<h:outputText value="#{cursorItensVenda.quantidade}" />
+							</p:column>
+							<p:column headerText="Preço">
+								<h:outputText value="#{cursorItensVenda.valorParcial}" />
+							</p:column>
+						</p:dataTable>
+					</p:rowExpansion>
+					
 				</p:dataTable>
 
 				<!-- Abaixo apenas os botãos "Sim" e "Não" -->

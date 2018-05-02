@@ -42,7 +42,7 @@ public class HibernateUtil {   //A fábrica de sessões recebe o método de cria
             return factory;
         }
         catch (Throwable ex) {
-            System.err.println("A fábrica de sessão não pode ser criada:" + ex);
+            System.err.println("A fábrica de sessão não pode ser criada: " + ex);
             throw new ExceptionInInitializerError(ex);
         }
     }
