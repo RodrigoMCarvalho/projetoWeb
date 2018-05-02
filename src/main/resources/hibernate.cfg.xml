@@ -30,7 +30,8 @@
 
 		<!-- Drop and re-create the database schema on startup -->
 		<property name="hbm2ddl.auto">validate</property>
-
+		
+		<mapping class="br.com.drogaria.domain.Caixa" />
 		<mapping class="br.com.drogaria.domain.Cidade" />
 		<mapping class="br.com.drogaria.domain.Cliente" />
 		<mapping class="br.com.drogaria.domain.Estado" />

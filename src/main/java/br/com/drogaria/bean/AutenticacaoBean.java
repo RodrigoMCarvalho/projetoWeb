@@ -1,6 +1,7 @@
 package br.com.drogaria.bean;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -13,9 +14,10 @@ import br.com.drogaria.dao.UsuarioDAO;
 import br.com.drogaria.domain.Pessoa;
 import br.com.drogaria.domain.Usuario;
 
+@SuppressWarnings("serial")
 @ManagedBean
 @SessionScoped
-public class AutenticacaoBean {
+public class AutenticacaoBean implements Serializable {
 	private Usuario usuario;
 	private Usuario usuarioLogado;
 	
@@ -50,7 +52,6 @@ public class AutenticacaoBean {
 	public Usuario getUsuario() {
 		return usuario;
 	}
-
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}

@@ -8,8 +8,78 @@
 	template="/templates/modelo.xhtml">
 
 	<ui:define name="conteudo">  <!-- necessário ter o mesmo nome do ui:insert -->
+	
+	<h:form id="formPrincipal">
+		<p:panel header="Fabricantes - Listagem">
+			<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
+				paginator="true" value="#{fabricanteBean.listFabricantes}"
+				var="cursorFabricantes" paginatorPosition="bottom">
 
-		
+				<f:facet name="header">
+					<p:commandButton icon="ui-icon-plus"
+						actionListener="#{fabricanteBean.novo}"
+						oncomplete="PF('dialogo').show();" update=":mensagem :form:painel">
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						<!-- Atualiza o dialog devido ao required="true"-->
+					</p:commandButton>
+				</f:facet>
+
+				<p:column headerText="Descrição">
+					<h:outputText value="#{cursorFabricantes.descricao}" />
+				</p:column>
+
+				<p:column headerText="Opções">
+					<p:column headerText="Opções">
+						<p:commandButton icon="ui-icon-trash"
+							actionListener="#{fabricanteBean.excluir}" 
+							update=":mensagem :form:painel :formPrincipal:tabela">
+							<p:confirm header="Confirmação"
+								message="Deseja excluir o fabricante?" icon="ui-icon-alert" />
+							<f:attribute name="fabricanteSelecionado" value="#{cursorFabricantes}" />
+						</p:commandButton>
+
+						<p:commandButton icon="ui-icon-pencil"
+							actionListener="#{fabricanteBean.editar}" update=":mensagem :form:painel"
+							oncomplete="PF('dialogo').show();">
+							<f:attribute name="fabricanteSelecionado" value="#{cursorFabricantes}" />
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+							<!-- Atualiza o dialog devido ao required="true"-->
+						</p:commandButton>
+					</p:column>
+				</p:column>
+			</p:dataTable>
+			
+			<!-- Abaixo apenas os botãos "Sim" e "Não" -->
+			<p:confirmDialog global="true">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</p:panel>
+	</h:form>
+
+	<p:dialog header="Fabricantes - Cadastro" widgetVar="dialogo"
+		draggable="false" resizable="false" modal="true">
+		<h:form id="form" enctype="multipart/form-data">
+			<h:panelGrid columns="2" id="painel">
+				<p:outputLabel for="desc" value="Descrição: " />
+				<p:inputText id="desc" size="30" maxlength="50" required="true"
+					requiredMessage="O campo Descrição é obrigatório."
+					value="#{fabricanteBean.fabricante.descricao}" >
+				</p:inputText>
+			 
+			</h:panelGrid>
+			<h:panelGrid columns="2">
+				<p:commandButton value="Salvar"
+					actionListener="#{fabricanteBean.salvar}" 
+					update=":mensagem :formPrincipal:tabela :form:painel"/>
+				<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" />
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
 
 </ui:define>
 </ui:composition>
