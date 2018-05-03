@@ -56,7 +56,7 @@ public class VendaBean implements Serializable {
 	public void listar() {
 		try {
 			VendaDAO vdao = new VendaDAO();
-			listVendas = vdao.listar();
+			listVendas = vdao.listar("horario");
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Erro para carregar as vendas");
 			erro.printStackTrace();
@@ -106,7 +106,7 @@ public class VendaBean implements Serializable {
 			itemVenda.setQuantidade((short) (itemVenda.getQuantidade() - 1));
 			itemVenda.setValorParcial(itemVenda.getValorParcial().subtract(itemVenda.getProduto().getPreco()));
 
-			// se a quantidade chegar a zero o item não deve mais existir na lista (carrinho
+			// se a quantidade chegar a zero, o item não deve mais existir na lista (carrinho
 			// de compras)
 			if (itemVenda.getQuantidade() == 0) {
 				listItemVendas.remove(posicaoEncontrada);

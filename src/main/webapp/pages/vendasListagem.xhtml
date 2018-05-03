@@ -21,11 +21,11 @@
 					paginator="true" rows="10" value="#{vendaBean.listVendas}" var="cursorVendas"
 					paginatorPosition="bottom">
 					
-					<p:column style="width:16px">
+					<p:column headerText="Destalhes" style="width:100px">
 						<p:rowToggler />
 					</p:column>
 					
-					<p:column headerText="Código" sortBy="#{cursorVendas.codigo}" style="width:80px">
+					<p:column headerText="Código" horario="#{cursorVendas.codigo}" style="width:80px">
 						<h:outputText value="#{cursorVendas.codigo}" />
 					</p:column>
 					
@@ -69,7 +69,7 @@
 						</p:column>
 					</p:column>
 					
-					<!--  OBS: é necessário fazer um cursor do cursor de venda -->
+					<!--  OBS: É necessário fazer um cursor do cursor de venda -->
 					<p:rowExpansion> 
 						<p:dataTable emptyMessage="Nenhum registro encontrado."
 							value="#{cursorVendas.itensVenda}" var="cursorItensVenda"> 
@@ -103,13 +103,13 @@
 			draggable="false" resizable="false" modal="true">
 			<h:form id="form" enctype="multipart/form-data">
 				<h:panelGrid columns="2" id="painel">
-					<p:outputLabel for="desc" value="Descrição: " />
+					<p:outputLabel for="desc" value="Descrição: "/>
 					<p:inputText id="desc" size="30" maxlength="50" required="true"
 						requiredMessage="O campo Descrição é obrigatório."
 						value="#{produtoBean.produto.descricao}">
 					</p:inputText>
 
-					<p:outputLabel for="qtd" value="Quantidade: " />
+					<p:outputLabel for="qtd" value="Quantidade: "/>
 					<p:inputText id="qtd" maxlength="5" size="10" required="true"
 						requiredMessage="O campo Quantidade é obrigatório."
 						value="#{produtoBean.produto.quantidade}"
@@ -117,7 +117,7 @@
 						<f:validateLongRange minimum="0" />
 					</p:inputText>
 
-					<p:outputLabel for="preco" value="Preço: " />
+					<p:outputLabel for="preco" value="Preço: " style="width:200px"/>
 					<p:inputText id="preco" maxlength="7" size="10" required="true"
 						requiredMessage="O campo Preço é obrigatório."
 						value="#{produtoBean.produto.preco}"

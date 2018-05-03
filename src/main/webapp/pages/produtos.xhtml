@@ -39,7 +39,8 @@
 				<p:column headerText="Fabricante">
 					<h:outputText value="#{cursorProdutos.fabricante.descricao}" />
 				</p:column>
-				<p:column headerText="Opções">
+				<p:column headerText="Foto" >
+					<p:graphicImage cache="false" width="50" height="50" url="http://localhost:8080/uploads/#{cursorProdutos.codigo}.png"/>
 				</p:column>
 
 				<p:column headerText="Opções">
@@ -59,6 +60,13 @@
 							<f:actionListener
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 							<!-- Atualiza o dialog devido ao required="true"-->
+						</p:commandButton>
+						
+						<p:commandButton icon="ui-icon-arrowthick-1-s" ajax="false"
+							actionListener="#{produtoBean.download}">
+							<f:attribute name="produtoSelecionado" value="#{cursorProdutos}" />
+							<!-- captura o produto e realiza o download da imagem -->
+							<p:fileDownload value="#{produtoBean.foto}" />
 						</p:commandButton>
 					</p:column>
 				</p:column>

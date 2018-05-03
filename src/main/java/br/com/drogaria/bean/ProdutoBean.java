@@ -1,7 +1,10 @@
 package br.com.drogaria.bean;
 
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -20,6 +23,8 @@ import javax.faces.event.ActionEvent;
 //import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
 import br.com.drogaria.dao.FabricanteDAO;
@@ -37,9 +42,10 @@ import br.com.drogaria.domain.Produto;
 @ManagedBean
 @ViewScoped
 public class ProdutoBean implements Serializable {
-	Produto produto;
-	List<Produto> listProdutos;
-	List<Fabricante> listFabricantes;
+	private Produto produto;
+	private List<Produto> listProdutos;
+	private List<Fabricante> listFabricantes;
+	private StreamedContent foto;
 	
 	public void novo() {
 		produto = new Produto();
@@ -130,6 +136,19 @@ public class ProdutoBean implements Serializable {
 		}
 	}
 	
+	public void download(ActionEvent evento) {
+		produto = (Produto) evento.getComponent().getAttributes().get("produtoSelecionado");
+		try {
+			
+		InputStream stream = new FileInputStream ("C:/Users/rodri_000/Desktop/Desenvolvimento Web/Projeto DrogariaV2/Uploads/" + produto.getCodigo() + ".png");
+		foto = new DefaultStreamedContent(stream , "/image/png", produto.getCodigo() + ".png"); //caminho, tipo, nome da imagem que será salva
+		
+		} catch (FileNotFoundException erro) {
+			Messages.addGlobalError("Falha para realizar o download da imagem");
+			erro.printStackTrace();
+		} 
+	}
+	
 //	public void imprimir() {
 //		try {
 //		String caminho = Faces.getRealPath("reports/produtos.jrxml"); //captura o caminho de execução
@@ -167,6 +186,14 @@ public class ProdutoBean implements Serializable {
 
 	public void setListFabricantes(List<Fabricante> listFabricantes) {
 		this.listFabricantes = listFabricantes;
+	}
+
+	public StreamedContent getFoto() {
+		return foto;
+	}
+
+	public void setFoto(StreamedContent foto) {
+		this.foto = foto;
 	}
 	
 	

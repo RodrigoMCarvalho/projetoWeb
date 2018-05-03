@@ -16,9 +16,6 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
-
-
-
 @SuppressWarnings("serial")
 @Entity
 public class Venda extends GenericDomain {
@@ -37,6 +34,7 @@ public class Venda extends GenericDomain {
 	@JoinColumn(nullable = false)
 	private Funcionario funcionario;
 	
+	//na entidade Vendas, a FK é "venda"(ManyToOne)
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "venda") //quando carregar a venda, será carregado também os seus itens
 	@Fetch(FetchMode.SUBSELECT)
 	private List<ItemVenda> itensVenda;
