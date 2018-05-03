@@ -109,7 +109,6 @@ public class PessoaBean implements Serializable{
 	}
 
 	public List<Pessoa> getListPessoas() {
-		
 		return listPessoas;
 	}
 
