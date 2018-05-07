@@ -14,7 +14,7 @@
 				value="#{funcionarioBean.listFuncionarios}" var="cursorFuncionarios">
 
 				<f:facet name="header">
-					<p:commandButton icon="ui-icon-plus" oncomplete="PF('dialogo').show();" 
+					<p:commandButton icon="ui-icon-plus" title="Novo" oncomplete="PF('dialogo').show();" 
 					actionListener="#{funcionarioBean.novo()}" update=":mensagem :form:painel"/>
 				</f:facet>
 				
@@ -32,7 +32,7 @@
 				
 				<p:column headerText="Opções" style="text-align:center">
 					<p:column headerText="Opções">
-						<p:commandButton icon="ui-icon-trash"
+						<p:commandButton icon="ui-icon-trash" title="Excluir"
 							actionListener="#{funcionarioBean.excluir}" 
 							update=":mensagem :formPrincipal:tabela :form:painel">
 							<p:confirm header="Confirmação"
@@ -40,7 +40,7 @@
 							<f:attribute name="funcionarioSelecionado" value="#{cursorFuncionarios}" />
 						</p:commandButton>
 
-						<p:commandButton icon="ui-icon-pencil"
+						<p:commandButton icon="ui-icon-pencil" title="Editar"
 							actionListener="#{funcionarioBean.editar}" update=":mensagem :form:painel"
 							oncomplete="PF('dialogo').show();">
 							<f:attribute name="funcionarioSelecionado" value="#{cursorFuncionarios}" />

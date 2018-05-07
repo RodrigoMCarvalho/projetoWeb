@@ -16,7 +16,7 @@
 				var="cursorFabricantes" paginatorPosition="bottom">
 
 				<f:facet name="header">
-					<p:commandButton icon="ui-icon-plus"
+					<p:commandButton icon="ui-icon-plus" title="Novo"
 						actionListener="#{fabricanteBean.novo}"
 						oncomplete="PF('dialogo').show();" update=":mensagem :form:painel">
 						<f:actionListener
@@ -31,7 +31,7 @@
 
 				<p:column headerText="Opções" style="text-align:center">
 					<p:column headerText="Opções">
-						<p:commandButton icon="ui-icon-trash"
+						<p:commandButton icon="ui-icon-trash" title="Excluir"
 							actionListener="#{fabricanteBean.excluir}" 
 							update=":mensagem :form:painel :formPrincipal:tabela">
 							<p:confirm header="Confirmação"
@@ -39,7 +39,7 @@
 							<f:attribute name="fabricanteSelecionado" value="#{cursorFabricantes}" />
 						</p:commandButton>
 
-						<p:commandButton icon="ui-icon-pencil"
+						<p:commandButton icon="ui-icon-pencil" title="Editar"
 							actionListener="#{fabricanteBean.editar}" update=":mensagem :form:painel"
 							oncomplete="PF('dialogo').show();">
 							<f:attribute name="fabricanteSelecionado" value="#{cursorFabricantes}" />

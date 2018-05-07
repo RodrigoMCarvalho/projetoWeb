@@ -15,7 +15,7 @@
 				var="cursorUsuario">
 
 				<f:facet name="header">
-					<p:commandButton icon="ui-icon-plus" oncomplete="PF('dialogo').show();"
+					<p:commandButton icon="ui-icon-plus" title="Novo" oncomplete="PF('dialogo').show();"
 						actionListener="#{usuarioBean.novo}" update=":form:painel">
 						<f:actionListener
 							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
@@ -40,7 +40,7 @@
 				</p:column>
 				
 				<p:column headerText="Opções" style="text-align:center">
-					<p:commandButton icon="ui-icon-trash"
+					<p:commandButton icon="ui-icon-trash" title="Excluir"
 						actionListener="#{usuarioBean.excluir}" 
 						update=":mensagem :form:painel :formPrincipal:tabela">
 						<p:confirm header="Confirmação"
@@ -51,7 +51,7 @@
 						<!-- Atualiza o dialog devido ao required="true"-->
 					</p:commandButton>
 
-					<p:commandButton icon="ui-icon-pencil"
+					<p:commandButton icon="ui-icon-pencil" title="Editar"
 						actionListener="#{usuarioBean.editar}"
 						oncomplete="PF('dialogo').show();" update=":mensagem :form:painel">
 						<f:attribute name="usuarioSelecionado" value="#{cursorUsuario}" />

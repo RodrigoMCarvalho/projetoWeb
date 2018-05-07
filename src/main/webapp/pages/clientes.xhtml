@@ -15,7 +15,7 @@
 				var="cursorCliente" paginatorPosition="bottom">
 
 				<f:facet name="header">
-					<p:commandButton icon="ui-icon-plus" oncomplete="PF('dialogo').show();"
+					<p:commandButton icon="ui-icon-plus" title="Novo" oncomplete="PF('dialogo').show();"
 						actionListener="#{clienteBean.novo}"
 						update=":mensagem :form:painel">
 						<f:actionListener
@@ -39,12 +39,12 @@
 					<h:outputText value="#{cursorCliente.liberadoFormatado}" />
 				</p:column>
 				<p:column headerText="Opções" style="text-align:center">
-					<p:commandButton icon="ui-icon-trash">
+					<p:commandButton icon="ui-icon-trash" title="Excluir">
 						<p:confirm header="Confirmação" message="Deseja excluir o estado?"
 							icon="ui-icon-alert" />
 						<f:attribute name="estadoSelecionado" value="#{cursorEstado}" />
 					</p:commandButton>
-					<p:commandButton icon="ui-icon-pencil"
+					<p:commandButton icon="ui-icon-pencil" title="Editar"
 						actionListener="#{clienteBean.editar}" update=":form:painel"
 						oncomplete="PF('dialogo').show();">
 						<f:attribute name="clienteSelecionado" value="#{cursorCliente}" />

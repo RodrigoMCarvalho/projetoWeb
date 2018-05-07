@@ -30,8 +30,8 @@
 				<h:outputText value="#{cursorProdutos.fabricante.descricao}" />
 			</p:column>
 
-			<p:column headerText="Opções">
-				<p:commandButton icon="ui-icon-plus" actionListener="#{vendaBean.adicionar}"
+			<p:column headerText="Opções" style="text-align:center">
+				<p:commandButton icon="ui-icon-plus" title="Adicionar" actionListener="#{vendaBean.adicionar}"
 				update=":mensagem :formPrincipal:tabelaCompras :formPrincipal:finalizar">
 				<f:attribute name="produtoSelecionado" value="#{cursorProdutos}" />
 				</p:commandButton>
@@ -62,12 +62,12 @@
 				</h:outputText>
 			</p:column>
 
-			<p:column headerText="Opções">
-				<p:commandButton icon="ui-icon-minus" actionListener="#{vendaBean.diminiur}"
+			<p:column headerText="Opções" style="text-align:center">
+				<p:commandButton icon="ui-icon-minus" title="Diminuir" actionListener="#{vendaBean.diminiur}"
 				update=":mensagem :formPrincipal:tabelaCompras :formPrincipal:finalizar">
 				<f:attribute name="itemSelecionado" value="#{cursorItemVendas}" />
 				</p:commandButton>
-					<p:commandButton icon="ui-icon-trash"  actionListener="#{vendaBean.remover}"
+					<p:commandButton icon="ui-icon-trash" title="Excluir" actionListener="#{vendaBean.remover}"
 				update=":mensagem :formPrincipal:tabelaCompras :formPrincipal:finalizar">
 				<f:attribute name="itemSelecionado" value="#{cursorItemVendas}" />
 				</p:commandButton>

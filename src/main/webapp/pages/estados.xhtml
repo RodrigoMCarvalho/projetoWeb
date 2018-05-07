@@ -16,7 +16,7 @@
 				value="#{estadoBean.listEstados}" var="cursorEstado">
 
 				<f:facet name="header">
-					<p:commandButton icon="ui-icon-plus" oncomplete="PF('dialogo').show();"
+					<p:commandButton icon="ui-icon-plus" title="Novo" oncomplete="PF('dialogo').show();"
 						actionListener="#{estadoBean.novo()}"
 						update=":formEstado:panelEstado" />
 					<!-- chama o método 'novo' para inicializar a variável estado e update para apagar os dados da caixa de texto -->
@@ -30,14 +30,14 @@
 				</p:column>
 				
 				<p:column headerText="Opções" style="text-align:center">
-					<p:commandButton icon="ui-icon-trash"
+					<p:commandButton icon="ui-icon-trash" title="Excluir"
 						actionListener="#{estadoBean.excluir}" update=":mensagem :formListagem:tableEstado">
 						<p:confirm header="Confirmação" message="Deseja excluir o estado?"
 							icon="ui-icon-alert" />
 						<f:attribute name="estadoSelecionado" value="#{cursorEstado}"/>
 					</p:commandButton>
 					
-					<p:commandButton icon="ui-icon-pencil"
+					<p:commandButton icon="ui-icon-pencil" title="Editar"
 						actionListener="#{estadoBean.editar}"
 						update=":formEstado:panelEstado"
 						oncomplete="PF('dialogo').show();" > 

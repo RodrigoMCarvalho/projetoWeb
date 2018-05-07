@@ -15,7 +15,7 @@
 				var="cursorPessoas" paginatorPosition="bottom">
 
 				<f:facet name="header">
-					<p:commandButton icon="ui-icon-plus" actionListener="#{pessoaBean.novo()}"
+					<p:commandButton icon="ui-icon-plus" title="Novo" actionListener="#{pessoaBean.novo()}"
 						oncomplete="PF('dialogo').show();" update=":mensagem :form:painel">
 						<f:actionListener
 							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
@@ -35,14 +35,14 @@
 
 				<p:column headerText="Opções" style="text-align:center">
 					<p:column headerText="Opções">
-						<p:commandButton icon="ui-icon-trash"
+						<p:commandButton icon="ui-icon-trash" title="Excluir"
 							actionListener="#{cidadeBean.excluir}">
 							<p:confirm header="Confirmação"
 								message="Deseja excluir o produto?" icon="ui-icon-alert" />
 							<f:attribute name="cidadeSelecionada" value="#{cursorCidade}" />
 						</p:commandButton>
 
-						<p:commandButton icon="ui-icon-pencil"
+						<p:commandButton icon="ui-icon-pencil" title="Editar"
 							actionListener="#{pessoaBean.editar}"
 							oncomplete="PF('dialogo').show();" update=":mensagem :form:painel :form:estado">
 							<f:attribute name="pessoaSelecionada" value="#{cursorPessoas}" />

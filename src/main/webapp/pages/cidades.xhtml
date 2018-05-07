@@ -15,7 +15,7 @@
 				var="cursorCidade" paginatorPosition="bottom">
 
 				<f:facet name="header">
-					<p:commandButton icon="ui-icon-plus" actionListener="#{cidadeBean.novo}"
+					<p:commandButton icon="ui-icon-plus" title="Novo" actionListener="#{cidadeBean.novo}"
 						oncomplete="PF('dialogo').show();" update=":mensagem :form:painel">
 						<f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 						<!-- Atualiza o dialog devido ao required="true"-->
@@ -33,7 +33,7 @@
 				</p:column>
 
 					<p:column headerText="Opções" style="text-align:center">
-						<p:commandButton icon="ui-icon-trash"
+						<p:commandButton icon="ui-icon-trash" title="Excluir"
 							actionListener="#{cidadeBean.excluir}"
 							update=":mensagem :formPrincipal:tabela :form:painel">
 							<p:confirm header="Confirmação"
@@ -41,7 +41,7 @@
 							<f:attribute name="cidadeSelecionada" value="#{cursorCidade}" />
 						</p:commandButton>
 
-						<p:commandButton icon="ui-icon-pencil"
+						<p:commandButton icon="ui-icon-pencil" title="Editar"
 							actionListener="#{cidadeBean.editar}"
 							update=":mensagem :form:painel" oncomplete="PF('dialogo').show();">
 							<f:attribute name="cidadeSelecionada" value="#{cursorCidade}" />
