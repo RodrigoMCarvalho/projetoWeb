@@ -35,10 +35,10 @@
 						<f:convertDateTime locale="pt_BR" />
 					</h:outputText>
 				</p:column >
-				<p:column headerText="Liberado"  >
+				<p:column headerText="Liberado" style="text-align:center" >
 					<h:outputText value="#{cursorCliente.liberadoFormatado}" />
 				</p:column>
-				<p:column headerText="Opções">
+				<p:column headerText="Opções" style="text-align:center">
 					<p:commandButton icon="ui-icon-trash">
 						<p:confirm header="Confirmação" message="Deseja excluir o estado?"
 							icon="ui-icon-alert" />

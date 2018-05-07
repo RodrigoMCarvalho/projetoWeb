@@ -37,7 +37,7 @@
 
 					<p:column headerText="Preço Total" style="width:100px">
 						<h:outputText value="#{cursorVendas.precoTotal}">
-							<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+							<f:convertNumber type="currency" locale="pt_BR" minFractionDigits="2" />
 						</h:outputText>
 					</p:column>
 					<p:column headerText="Funcionário">
@@ -47,7 +47,7 @@
 						<h:outputText value="#{cursorVendas.cliente.pessoa.nome}" />
 					</p:column>
 
-					<p:column headerText="Opções" style="width:200px">
+					<p:column headerText="Opções" style="width:100px; text-align:center">
 						<p:column headerText="Opções">
 							<p:commandButton icon="ui-icon-trash"
 								actionListener="#{produtoBean.excluir}"
@@ -57,15 +57,6 @@
 								<f:attribute name="produtoSelecionado" value="#{cursorProdutos}" />
 							</p:commandButton>
 
-							<p:commandButton icon="ui-icon-pencil"
-								actionListener="#{produtoBean.editar}"
-								update=":mensagem :form:painel"
-								oncomplete="PF('dialogo').show();">
-								<f:attribute name="produtoSelecionado" value="#{cursorVendas}" />
-								<f:actionListener
-									type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-								<!-- Atualiza o dialog devido ao required="true"-->
-							</p:commandButton>
 						</p:column>
 					</p:column>
 					
@@ -80,7 +71,9 @@
 								<h:outputText value="#{cursorItensVenda.quantidade}" />
 							</p:column>
 							<p:column headerText="Preço">
-								<h:outputText value="#{cursorItensVenda.valorParcial}" />
+								<h:outputText value="#{cursorItensVenda.valorParcial}">
+									<f:convertNumber type="currency" locale="pt_BR" minFractionDigits="2"/>
+								</h:outputText>
 							</p:column>
 						</p:dataTable>
 					</p:rowExpansion>
@@ -123,7 +116,7 @@
 						value="#{produtoBean.produto.preco}"
 						validatorMessage="Informe um valor maior que 0.">
 						<f:validateDoubleRange minimum="0.1" />
-						<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+						<f:convertNumber type="currency" locale="pt_BR" minFractionDigits="2" />
 					</p:inputText>
 
 					<p:outputLabel for="fab" value="Fabricante: " />

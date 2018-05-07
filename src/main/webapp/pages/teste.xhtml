@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+</h:head>
+<h:body>
+	<p:messages autoUpdate="true" />
+	<h:form>
+		<p:panelGrid columns="1">
+			<f:facet name="header">
+				Cadastro de Usuários
+			</f:facet>
+			<h:panelGroup>
+				<p:outputLabel value="Login " for="login" />
+				<p:inputText id="login" required="true"
+					requiredMessage="Campo Nome obrigatório." value="#{testeBean.login}" />
+				<p:commandButton value="Verificar Disponibilidade" 
+					action="#{testeBean.verificarLogin()}"
+					process="login @this"/>
+					<!-- processa apenas o campo login e o botão(this) -->
+			</h:panelGroup>
+			
+			
+			<h:panelGroup>
+			<p:outputLabel value="E-mail: " for="email" />
+			<p:inputText id="email" required="true"
+				requiredMessage="Campo E-mail obrigatório." value="#{testeBean.email}" />
+			</h:panelGroup>
+			<p:outputLabel value="Mensagem: "/>
+			<p:inputTextarea  />
+		</p:panelGrid>
+		<p:commandButton value="Salvar" actionListener="#{testeBean.salvar}"/>
+	</h:form>
+ 
+</h:body>
+</html>

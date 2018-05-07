@@ -30,15 +30,16 @@
 				<p:column headerText="CPF">
 					<h:outputText value="#{cursorUsuario.pessoa.cpf}" />
 				</p:column>
-				<p:column headerText="Tipo">
+				<p:column headerText="Tipo" style="width:10%">
 					<h:outputText value="#{cursorUsuario.tipoFormatado}" />
 					<!-- tipoFormatado para exibir um nome ao invés da letra. Ex: tipo A, mostra Administrador -->
 				</p:column>
-				<p:column headerText="Ativo" style="width:10%">
+				<p:column headerText="Ativo" style="width:10%; text-align:center">
 					<h:outputText value="#{cursorUsuario.ativoFormatado}" />
 					<!-- <p:selectBooleanCheckbox value="#{cursorUsuario.ativo}" disabled="true"/> -->
 				</p:column>
-				<p:column headerText="Opções">
+				
+				<p:column headerText="Opções" style="text-align:center">
 					<p:commandButton icon="ui-icon-trash"
 						actionListener="#{usuarioBean.excluir}" 
 						update=":mensagem :form:painel :formPrincipal:tabela">

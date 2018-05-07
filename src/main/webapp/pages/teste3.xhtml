@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<h:outputStylesheet library="css" name="estilos.css" />
+	<h:outputScript library="js" name="scripts.js" />
+</h:head>
+<h:body>
+	<p:growl autoUpdate="true" />
+	<h:form>
+		<p:panelGrid columns="2">
+			<f:facet name="header">
+				Cadastro de Usuários
+			</f:facet>
+
+			<p:outputLabel value="Login " for="login" />
+			<p:inputText id="login" required="true"
+				requiredMessage="Campo Nome obrigatório." value="#{testeBean.login}" />
+
+			<p:outputLabel value="E-mail: " for="email" />
+			<p:inputText id="email" required="true"
+				requiredMessage="Campo E-mail obrigatório."
+				value="#{testeBean.email}" />
+
+			<p:outputLabel value="Data de nascimento: " for="nasc" />
+			<p:calendar id="nasc" locale="pt_BR" required="true" requiredMessage="Campo Nascimento obrigatório."/>
+			
+			<p:outputLabel value="Sexo: " for="sexo" />
+			<p:selectOneRadio id="sexo" required="true" requiredMessage="Campo Sexo obrigatório.">
+				<f:selectItem itemLabel="Masculino" itemValue="M" value="#{testeBean.sexo}"/>
+				<f:selectItem itemLabel="Feminino" itemValue="F"/>
+			</p:selectOneRadio>
+			
+			<p:outputLabel value="Telefone: " for="telefone"/>
+			<p:inputMask mask="(99)9999-9999" id="telefone" value="#{testeBean.telefone}"/>
+
+			<p:outputLabel value="Profissão: " for="profissao"/>
+			<p:selectOneMenu id="profissao" required="true" requiredMessage="Campo Profissão obrigatório.">
+				<f:selectItem itemLabel="Selecione" noSelectionOption="true"/>
+				<f:selectItem itemLabel="Estudante" itemValue="1" />
+				<f:selectItem itemLabel="Supervisor" itemValue="2" />
+				<f:selectItem itemLabel="Analista" itemValue="3" />
+				<f:selectItem itemLabel="Gerente" itemValue="4"/>
+			</p:selectOneMenu>
+			
+			<p:outputLabel value="Estados" for="estado"/>
+			<p:selectOneMenu id="estado" value="#{testeBean.estado}" required="true" requiredMessage="O campo Estado é obrigatório.">
+				<f:selectItem itemLabel="Selecione" noSelectionOption="true"/>
+				<f:selectItems value="#{testeBean.listEstados}" var="cursorEstados" 
+					itemLabel="#{cursorEstados}" itemValue="#{cursorEstados}"/>
+				<p:ajax listener="#{testeBean.carregarCidades}" process="@this" update="cidade"/>
+			</p:selectOneMenu>
+			
+			<p:outputLabel  value="Cidades" for="cidade" />
+			<p:selectOneMenu id="cidade" value="#{testeBean.cidade}">
+				<f:selectItems value="#{testeBean.listCidades}" var="cursorCidades"
+					itemLabel="#{cursorCidades}" itemValue="#{cursorCidades}" />
+			</p:selectOneMenu>
+			
+			<p:outputLabel value="País: " for="pais"/>
+			<p:autoComplete id="pais" value="#{testeBean.pais}" required="true"
+				completeMethod="#{testeBean.sugerirPaises}"/>
+			
+			<p:outputLabel value="Interesses: " />
+			<p:selectManyCheckbox layout="pageDirection">
+				<f:selectItem itemLabel="Cinema" itemValue=""/>
+				<f:selectItem itemLabel="Esportes" itemValue=""/>
+				<f:selectItem itemLabel="Política" itemValue=""/>
+				<f:selectItem itemLabel="Natureza" itemValue=""/>
+			</p:selectManyCheckbox>
+			
+			
+			<p:outputLabel value="Mensagem: "/>
+			<h:panelGroup>
+				<p:inputTextarea cols="20" rows="5" maxlength="40"
+					counter="contador" counterTemplate="Restam {0} caracteres." />
+				<br/>
+				<h:outputText id="contador" />
+			</h:panelGroup>
+			
+			<h:panelGroup />
+			<h:panelGroup>
+				<p:selectBooleanCheckbox id="aceito" value="" style="margin-right:5px" />
+				<p:outputLabel for="aceito" value="Aceito os termos de serviços."/>
+			</h:panelGroup>
+
+		</p:panelGrid>
+		<p:commandButton value="Salvar" actionListener="#{testeBean.salvar}" />
+	</h:form>
+
+</h:body>
+</html>

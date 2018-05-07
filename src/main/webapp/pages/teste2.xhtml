@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<style>
+		.status{
+			width:100px;
+			height:100px;
+			position: fixed;
+			right: 40px;
+			top:10px;
+		}
+	</style>
+</h:head>
+<h:body>
+	<p:messages autoUpdate="true" />
+	<h:form>
+		<p:ajaxStatus styleClass="status">
+			<f:facet name="start">
+				<h:graphicImage library="images" name="carregando.gif"/>
+			</f:facet>
+			<f:facet name="complete">
+				<h:outputText value="" />
+			</f:facet>
+		</p:ajaxStatus>
+		
+		<p:panelGrid columns="2">
+			<f:facet name="header">
+				Cadastro de Usuários
+			</f:facet>
+
+			<p:outputLabel value="Login " for="login" />
+			<p:inputText id="login" required="true"
+				requiredMessage="Campo Nome obrigatório." value="#{testeBean.login}">
+				<p:ajax listener="#{testeBean.verificarLogin}" process="@this"/>
+			</p:inputText>
+			
+			<p:outputLabel value="Senha: " for="senha"/>
+			<p:password id="senha" required="true" requiredMessage="Campo Senha é obrigatório."
+				feedback="true" weakLabel="Fraca" goodLabel="Boa" strongLabel="Forte" 
+				promptLabel="Digite sua senha." inline="true" 
+				match="confirmacaoSenha" validatorMessage="Senha informada não confere."/>
+				
+			<p:outputLabel value="Confirme sua senha: " for="confirmacaoSenha"/>
+			<p:password id="confirmacaoSenha" required="true" requiredMessage="Confirme sua senha."/>
+
+			<p:outputLabel value="E-mail: " for="email" />
+			<p:inputText id="email" required="true"
+				requiredMessage="Campo E-mail obrigatório."
+				value="#{testeBean.email}" />
+			
+		</p:panelGrid>
+		
+			<p:commandButton value="Salvar" actionListener="#{testeBean.salvar}" />
+
+	</h:form>
+
+</h:body>
+</html>

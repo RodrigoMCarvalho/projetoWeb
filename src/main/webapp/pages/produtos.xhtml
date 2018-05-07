@@ -33,17 +33,17 @@
 				</p:column>
 				<p:column headerText="Preço">
 					<h:outputText value="#{cursorProdutos.preco}">
-						<f:convertNumber locale="pt_BR" minFractionDigits="2"/>
+						<f:convertNumber type="currency" locale="pt_BR" minFractionDigits="2"/>
 					</h:outputText>
 				</p:column>
 				<p:column headerText="Fabricante">
 					<h:outputText value="#{cursorProdutos.fabricante.descricao}" />
 				</p:column>
-				<p:column headerText="Foto" >
+				<p:column headerText="Foto" styleClass="centro">
 					<p:graphicImage cache="false" width="50" height="50" url="http://localhost:8080/uploads/#{cursorProdutos.codigo}.png"/>
 				</p:column>
 
-				<p:column headerText="Opções">
+				<p:column headerText="Opções" style="text-align:center">
 					<p:column headerText="Opções">
 						<p:commandButton icon="ui-icon-trash"
 							actionListener="#{produtoBean.excluir}" 

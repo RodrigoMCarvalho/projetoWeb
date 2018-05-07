@@ -25,19 +25,20 @@
 					filterBy="#{cursorEstado.nome}" filterMatchMode="contains">
 					<h:outputText value="#{cursorEstado.nome}" />
 				</p:column>
-				<p:column headerText="Sigla">
+				<p:column headerText="Sigla" style="text-align:center">
 					<h:outputText value="#{cursorEstado.sigla}" />
 				</p:column>
 				
-				<p:column headerText="Opções">
-					<p:commandButton icon="ui-icon-trash" 
+				<p:column headerText="Opções" style="text-align:center">
+					<p:commandButton icon="ui-icon-trash"
 						actionListener="#{estadoBean.excluir}" update=":mensagem :formListagem:tableEstado">
 						<p:confirm header="Confirmação" message="Deseja excluir o estado?"
 							icon="ui-icon-alert" />
 						<f:attribute name="estadoSelecionado" value="#{cursorEstado}"/>
 					</p:commandButton>
 					
-					<p:commandButton icon="ui-icon-pencil" actionListener="#{estadoBean.editar}"
+					<p:commandButton icon="ui-icon-pencil"
+						actionListener="#{estadoBean.editar}"
 						update=":formEstado:panelEstado"
 						oncomplete="PF('dialogo').show();" > 
 						<f:attribute name="estadoSelecionado" value="#{cursorEstado}"/>

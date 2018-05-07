@@ -3,6 +3,10 @@
 	font-size: 15px !important;
 }
 
+.centro{
+	text-align: center;
+}
+
 .imagemCentral{
 	display : block;
 	margin-left: auto;

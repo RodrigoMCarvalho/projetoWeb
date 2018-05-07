@@ -23,7 +23,7 @@
 			</p:column>
 			<p:column headerText="Preço">
 				<h:outputText value="#{cursorProdutos.preco}">
-					<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+					<f:convertNumber type="currency" locale="pt_BR" minFractionDigits="2" />
 				</h:outputText>
 			</p:column>
 			<p:column headerText="Fabricante">
@@ -50,7 +50,7 @@
 			</p:column>
 			<p:column headerText="Preço Unitário">
 				<h:outputText value="#{cursorItemVendas.produto.preco}" >
-					<f:convertNumber locale="pt_BR" minFractionDigits="2"/>
+					<f:convertNumber type="currency" locale="pt_BR" minFractionDigits="2"/>
 				</h:outputText>
 			</p:column>
 			<p:column headerText="Qtd">
@@ -58,7 +58,7 @@
 			</p:column>
 			<p:column headerText="Preço Parcial">
 				<h:outputText value="#{cursorItemVendas.valorParcial}" >
-					<f:convertNumber locale="pt_BR" minFractionDigits="2"/>
+					<f:convertNumber type="currency" locale="pt_BR" minFractionDigits="2"/>
 				</h:outputText>
 			</p:column>
 
@@ -114,9 +114,9 @@
 							locale="pt_BR" timeZone="America/Sao_Paulo"/>
 						</h:outputText>
 					
-					<p:outputLabel value="Valor Total: R$"/>
+					<p:outputLabel value="Valor Total: "/>
 						<h:outputText value="#{vendaBean.venda.precoTotal}">
-							<f:convertNumber locale="pt_BR" minFractionDigits="2"/>
+							<f:convertNumber type="currency" locale="pt_BR" minFractionDigits="2"/>
 					</h:outputText>
 					
 				</h:panelGrid>
