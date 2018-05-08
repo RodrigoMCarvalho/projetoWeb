@@ -157,7 +157,7 @@ public class VendaBean implements Serializable {
 		try {
 			if (venda.getPrecoTotal().signum() == 0) { // comparação com BigDecimal
 				Messages.addGlobalError("Carrinho de compras vazio!");
-				return; // se o total for 0, retorna com a mensagem acima e nao continua e salva no BD
+				return; // se o total for 0, retorna com a mensagem acima e nao persiste no BD
 			}
 			
 			//para uma venda será salvo N itens
