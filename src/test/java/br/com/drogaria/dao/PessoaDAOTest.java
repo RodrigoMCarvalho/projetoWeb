@@ -6,7 +6,7 @@ import br.com.drogaria.domain.Cidade;
 import br.com.drogaria.domain.Pessoa;
 
 public class PessoaDAOTest {
-	/*@Test
+	
 	public void salvar() {
 		CidadeDAO cdao = new CidadeDAO();
 		Cidade cidade = cdao.buscar(1L);
@@ -29,5 +29,5 @@ public class PessoaDAOTest {
 		PessoaDAO dao = new PessoaDAO();
 		dao.salvar(p);
 		
-	}*/
+	}
 }
