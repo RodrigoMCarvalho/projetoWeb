@@ -27,7 +27,7 @@ public class PessoaDAOTest {
 		p.setEmail("email@gmail.com");
 		
 		PessoaDAO dao = new PessoaDAO();
-		dao.salvar(p);*/
+		dao.salvar(p);
 		
-	}
+	}*/
 }
